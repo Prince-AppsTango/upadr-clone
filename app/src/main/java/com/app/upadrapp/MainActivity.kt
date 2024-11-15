@@ -8,9 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import com.app.upadrapp.navigator.AppNavigation
 import com.app.upadrapp.ui.theme.LightCyan
 import com.app.upadrapp.ui.theme.UpadrTheme
-import com.app.upadrapp.view.AppContent
 import com.app.upadrapp.utils.SetStatusBarColor
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppContent()
+                    AppNavigation()
                 }
             }
         }

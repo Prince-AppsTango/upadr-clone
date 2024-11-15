@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.app.upadrapp.R
 import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.ui.theme.LightCyan
@@ -20,7 +21,7 @@ import com.app.upadrapp.utils.SafeArea
 
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(navController: NavController) {
     SafeArea {
         Column(
             modifier = Modifier
@@ -34,9 +35,13 @@ fun WelcomeScreen() {
                 contentDescription = "app logo",
                 modifier = Modifier.size(220.dp)
             )
-            CustomButton(text = "Sign Up", width = 300, onClick = {})
+            CustomButton(text = "Sign Up", width = 300, onClick = {
+                navController.navigate("signup")
+            })
             Spacer(modifier = Modifier.height(15.dp))
-            CustomButton(text = "Login", width = 300, onClick = {})
+            CustomButton(text = "Login", width = 300, onClick = {
+                navController.navigate("login")
+            })
         }
     }
 }
