@@ -98,6 +98,7 @@ fun LoginScreen(navController: NavController) {
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                         CustomButton(text = "Login", width = 300, onClick = {
+                            navController.navigate(Constant.HOME_SCREEN)
                         })
                     }
                     Spacer(modifier = Modifier.height(25.dp))
