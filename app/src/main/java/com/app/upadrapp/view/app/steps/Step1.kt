@@ -45,7 +45,7 @@ import com.app.upadrapp.ui.theme.ProcedureBorderColor
 import com.app.upadrapp.ui.theme.SubTitleColor
 
 @Composable
-fun Step1() {
+fun Step1(increment:Int,onClick:()->Unit) {
     val data = listOf("#Procedures1","#Procedures2","#Procedures3","#Procedures4","#Procedures5","#Procedures6")
     var selectedProcedure = remember {
         mutableStateOf("")
@@ -102,7 +102,7 @@ fun Step1() {
         Spacer(modifier = Modifier.height(15.dp))
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomEnd) {
             ExtendedFloatingActionButton(
-                onClick = { },
+                onClick = { onClick()},
                 modifier = Modifier
                     .width(160.dp)
                     .height(45.dp),
