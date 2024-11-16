@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.app.upadrapp.R
 import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.shared.CustomTextField
+import com.app.upadrapp.shared.OtpInputBox
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.MediumTurquoise
@@ -66,8 +67,7 @@ fun VerifyOtpScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Subtitle(text = "Please enter the 6 digit code sent to email@example.com", color = SubTitleColor)
                 Spacer(modifier = Modifier.height(50.dp))
-                CustomTextField(text = "Email", value = "", placeholder = "example@email.com", onChangeValue = {
-                })
+                OtpInputBox()
                 Spacer(modifier = Modifier.height(60.dp))
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                     Subtitle(text = "Didn’t receive the code? ", color = SubTitleColor)
