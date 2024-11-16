@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.app.upadrapp.view.auth.ForgotPasswordScreen
 import com.app.upadrapp.view.auth.LoginScreen
 import com.app.upadrapp.view.auth.SignUpScreen
 import com.app.upadrapp.view.auth.SplashScreen
@@ -35,6 +36,9 @@ fun AppNavigation() {
             }
             composable(route="signup"){
                 SignUpScreen(navController)
+            }
+            composable(route="forgotPassword"){
+              ForgotPasswordScreen()
             }
         }
     }

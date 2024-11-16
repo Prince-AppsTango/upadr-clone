@@ -91,7 +91,9 @@ fun LoginScreen(navController: NavController) {
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(text = "Forgot Password?", modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { }, textAlign = TextAlign.End, color = MediumTurquoise)
+                        .clickable {
+                                   navController.navigate(("forgotPassword"))
+                        }, textAlign = TextAlign.End, color = MediumTurquoise)
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                         CustomButton(text = "Login", width = 300, onClick = {
