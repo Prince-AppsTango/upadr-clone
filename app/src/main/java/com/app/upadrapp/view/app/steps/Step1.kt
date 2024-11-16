@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.app.steps
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,6 +28,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +47,9 @@ import com.app.upadrapp.ui.theme.SubTitleColor
 @Composable
 fun Step1() {
     val data = listOf("#Procedures1","#Procedures2","#Procedures3","#Procedures4","#Procedures5","#Procedures6")
+    var selectedProcedure = remember {
+        mutableStateOf("")
+    }
      Column {
          Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
              Image(
@@ -73,15 +79,18 @@ fun Step1() {
                 items(data) { it ->
                     Box(modifier = Modifier
                         .padding(5.dp)
-                        .clickable { }
+                        .clickable {
+                            selectedProcedure.value=it
+                        }
                         .width(160.dp)
                         .height(50.dp)
+                        .background(if(selectedProcedure.value ==it) DarkBlue else Color.White ,  shape = MaterialTheme.shapes.small)
                         .border(
-                            width = 2.dp,
+                            width =if(selectedProcedure.value ==it) 0.dp else 2.dp,
                             color = ProcedureBorderColor,
                             shape = MaterialTheme.shapes.small
                         ), contentAlignment = Alignment.Center) {
-                        Text(text = it.toString(), color = Color.Black)
+                        Title(text = it.toString(), color = if(selectedProcedure.value == it) Color.White else ProcedureBorderColor, fontSize = 15)
                     }
                 }
             }
@@ -104,7 +113,7 @@ fun Step1() {
                         Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Extended floating action button.", modifier = Modifier.size(25.dp))
                     }
                 },
-                containerColor = DarkBlue
+                containerColor =if(selectedProcedure.value !="") DarkBlue else Color.LightGray
             )
         }
     }
