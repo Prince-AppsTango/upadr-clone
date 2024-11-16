@@ -37,6 +37,7 @@ import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.ui.theme.LightCyan
 import com.app.upadrapp.ui.theme.MediumTurquoise
 import com.app.upadrapp.ui.theme.SubTitleColor
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 
 @Composable
@@ -92,7 +93,7 @@ fun LoginScreen(navController: NavController) {
                     Text(text = "Forgot Password?", modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                                   navController.navigate(("forgotPassword"))
+                                   navController.navigate(Constant.FORGOT_PASSWORD_SCREEN)
                         }, textAlign = TextAlign.End, color = MediumTurquoise)
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -109,7 +110,7 @@ fun LoginScreen(navController: NavController) {
                     Row(modifier = Modifier.fillMaxSize(1f), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Center) {
                        Subtitle(text = "Don’t have an account yet? ", color = SubTitleColor)
                        Subtitle(text = "Sign up", color = MediumTurquoise, modifier = Modifier.clickable {
-                           navController.navigate("signup")
+                           navController.navigate(Constant.SIGNUP_SCREEN)
                        })
                     }
                 }

@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.view.auth.ForgotPasswordScreen
 import com.app.upadrapp.view.auth.LoginScreen
 import com.app.upadrapp.view.auth.SignUpScreen
@@ -27,17 +28,17 @@ fun AppNavigation() {
     if(showSplash.value){
         SplashScreen()
     }else{
-        NavHost(navController = navController, startDestination = "welcome"){
-            composable(route="welcome"){
+        NavHost(navController = navController, startDestination = Constant.WELCOME_SCREEN){
+            composable(route= Constant.WELCOME_SCREEN){
                 WelcomeScreen(navController)
             }
-            composable(route="login"){
+            composable(route=Constant.LOGIN_SCREEN){
                 LoginScreen(navController)
             }
-            composable(route="signup"){
+            composable(route=Constant.SIGNUP_SCREEN){
                 SignUpScreen(navController)
             }
-            composable(route="forgotPassword"){
+            composable(route=Constant.FORGOT_PASSWORD_SCREEN){
               ForgotPasswordScreen()
             }
         }

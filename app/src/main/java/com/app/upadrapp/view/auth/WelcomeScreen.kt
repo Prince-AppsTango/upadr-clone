@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.app.upadrapp.R
 import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.ui.theme.LightCyan
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 
 
@@ -36,11 +37,11 @@ fun WelcomeScreen(navController: NavController) {
                 modifier = Modifier.size(220.dp)
             )
             CustomButton(text = "Sign Up", width = 300, onClick = {
-                navController.navigate("signup")
+                navController.navigate(Constant.SIGNUP_SCREEN)
             })
             Spacer(modifier = Modifier.height(15.dp))
             CustomButton(text = "Login", width = 300, onClick = {
-                navController.navigate("login")
+                navController.navigate(Constant.LOGIN_SCREEN)
             })
         }
     }
