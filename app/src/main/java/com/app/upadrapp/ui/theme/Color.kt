@@ -16,3 +16,5 @@ val MediumTurquoise = Color(0xFF4DCDCD)
 val LightSlateBlue = Color(0xFF81ADBA)
 val Black = Color.Black
 val SubTitleColor = Color(0xFF4F4F4F)
+val BorderColor  = Color(0xFF8E8E8E)
+val TextFieldTColor = Color(0xFF666666)
