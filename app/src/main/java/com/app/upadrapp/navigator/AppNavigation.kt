@@ -12,6 +12,7 @@ import com.app.upadrapp.view.auth.ForgotPasswordScreen
 import com.app.upadrapp.view.auth.LoginScreen
 import com.app.upadrapp.view.auth.SignUpScreen
 import com.app.upadrapp.view.auth.SplashScreen
+import com.app.upadrapp.view.auth.VerifyOtpScreen
 import com.app.upadrapp.view.auth.WelcomeScreen
 import kotlinx.coroutines.delay
 
@@ -40,6 +41,9 @@ fun AppNavigation() {
             }
             composable(route=Constant.FORGOT_PASSWORD_SCREEN){
               ForgotPasswordScreen(navController)
+            }
+            composable(route= Constant.VERIFY_OTP_SCREEN) { 
+                VerifyOtpScreen(navController = navController)
             }
         }
     }
