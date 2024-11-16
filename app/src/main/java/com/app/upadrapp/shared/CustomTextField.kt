@@ -16,7 +16,7 @@ import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.TextFieldTColor
 
 @Composable
-fun CustomTextField(text: String, value: String, onChangeValue: (it: String) -> Unit) {
+fun CustomTextField(text: String, value: String, onChangeValue: (it: String) -> Unit,placeholder: String) {
     OutlinedTextField(
         value = value,
         shape = RoundedCornerShape(10.dp),
@@ -36,7 +36,7 @@ fun CustomTextField(text: String, value: String, onChangeValue: (it: String) -> 
             Text(text = text, color = TextFieldTColor, fontSize = 14.sp)
         },
         placeholder = {
-            Text(text = text, fontSize = 14.sp)
+            Text(text = placeholder, fontSize = 14.sp)
         }
     )
 }

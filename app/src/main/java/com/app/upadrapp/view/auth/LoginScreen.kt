@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -45,11 +47,12 @@ fun LoginScreen(navController: NavController) {
     val password = remember {
         mutableStateOf("")
     }
+    val scrollState = rememberScrollState()
     SafeArea {
         Column(
             modifier = Modifier
                 .background(LightCyan)
-                .fillMaxSize(1f)
+                .fillMaxSize(1f).verticalScroll(scrollState)
         ) {
             Column(
                 modifier = Modifier
@@ -78,11 +81,11 @@ fun LoginScreen(navController: NavController) {
                         fontSize = 15
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CustomTextField(text = "Email", value = email.value, onChangeValue = {
+                    CustomTextField(text = "Email", value = email.value, placeholder = "example@email.com", onChangeValue = {
                         email.value = it
                     })
                     Spacer(modifier = Modifier.height(20.dp))
-                    CustomTextField(text = "Password", value = password.value, onChangeValue = {
+                    CustomTextField(text = "Password", placeholder = "password", value = password.value, onChangeValue = {
                         password.value = it
                     })
                     Spacer(modifier = Modifier.height(5.dp))
@@ -100,9 +103,12 @@ fun LoginScreen(navController: NavController) {
                             .size(70.dp)
                             .clickable { })
                     }
-                    Row(modifier = Modifier.fillMaxSize(1f).padding(0.dp,0.dp,0.dp,20.dp), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Center) {
+                    Spacer(modifier = Modifier.height(25.dp))
+                    Row(modifier = Modifier.fillMaxSize(1f), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Center) {
                        Subtitle(text = "Don’t have an account yet? ", color = SubTitleColor)
-                       Subtitle(text = "Sign up", color = MediumTurquoise)
+                       Subtitle(text = "Sign up", color = MediumTurquoise, modifier = Modifier.clickable {
+                           navController.navigate("signup")
+                       })
                     }
                 }
             }
