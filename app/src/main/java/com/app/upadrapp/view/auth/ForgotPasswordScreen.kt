@@ -42,7 +42,7 @@ fun ForgotPasswordScreen(navController: NavController) {
                .verticalScroll(scrollState)
           ) {
                IconButton(onClick = {
-                    navController.popBackStack()
+                    navController.navigateUp()
                }) {
                     Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "KeyboardArrowLeft", tint = Color.Black, modifier = Modifier.size(40.dp))
                }

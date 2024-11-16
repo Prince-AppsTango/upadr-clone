@@ -48,7 +48,7 @@ fun ChangePasswordScreen(navController: NavController) {
 
         ) {
             IconButton(onClick = {
-                navController.popBackStack()
+                navController.navigateUp()
             }) {
                 Icon(
                     Icons.Filled.KeyboardArrowLeft,
