@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +18,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,8 +34,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.app.upadrapp.R
+import com.app.upadrapp.shared.ButtonWithIcon
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
+import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.ui.theme.ProcedureBorderColor
 import com.app.upadrapp.ui.theme.SubTitleColor
 
@@ -41,7 +49,7 @@ fun Step1() {
              Image(
                  painter = painterResource(id = R.drawable.applogo),
                  contentDescription = "app logo",
-                 modifier = Modifier.size(220.dp)
+                 modifier = Modifier.size(190.dp)
              )
          }
      }
@@ -63,16 +71,41 @@ fun Step1() {
                 columns = GridCells.Fixed(2)
             ) {
                 items(data) { it ->
-                    Box(modifier = Modifier.padding(5.dp).clickable {  }.width(160.dp).height(50.dp).border(
-                        width = 2.dp,
-                        color = ProcedureBorderColor,
-                        shape = MaterialTheme.shapes.small
-                    ), contentAlignment = Alignment.Center) {
+                    Box(modifier = Modifier
+                        .padding(5.dp)
+                        .clickable { }
+                        .width(160.dp)
+                        .height(50.dp)
+                        .border(
+                            width = 2.dp,
+                            color = ProcedureBorderColor,
+                            shape = MaterialTheme.shapes.small
+                        ), contentAlignment = Alignment.Center) {
                         Text(text = it.toString(), color = Color.Black)
                     }
                 }
             }
-
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Column {
+            ButtonWithIcon(text = "My Procedures")
+        }
+        Spacer(modifier = Modifier.height(15.dp))
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomEnd) {
+            ExtendedFloatingActionButton(
+                onClick = { },
+                modifier = Modifier
+                    .width(160.dp)
+                    .height(45.dp),
+                shape = MaterialTheme.shapes.extraLarge,
+                content = {
+                    Row( horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                        Title(text = "Next", color = Color.White, fontSize = 16)
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Extended floating action button.", modifier = Modifier.size(25.dp))
+                    }
+                },
+                containerColor = DarkBlue
+            )
         }
     }
 }

@@ -13,6 +13,7 @@ import com.app.upadrapp.view.app.steps.Step1
 
 @Composable
 fun HomePage(navController: NavController) {
+
     SafeArea {
         Column(
             modifier = Modifier
