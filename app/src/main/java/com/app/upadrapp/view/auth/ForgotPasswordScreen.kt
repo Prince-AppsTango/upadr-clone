@@ -32,6 +32,7 @@ import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.LightCyan
 import com.app.upadrapp.ui.theme.SubTitleColor
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 
 @Composable
@@ -67,6 +68,7 @@ fun ForgotPasswordScreen(navController: NavController) {
                    Spacer(modifier = Modifier.height(200.dp))
                    Box(modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,0.dp,10.dp), contentAlignment = Alignment.Center) {
                         CustomButton(text = "Send Code", width = 300, onClick = {
+                             navController.navigate(Constant.VERIFY_OTP_SCREEN)
                         })
                    }
 
