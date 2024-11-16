@@ -18,3 +18,4 @@ val Black = Color.Black
 val SubTitleColor = Color(0xFF4F4F4F)
 val BorderColor  = Color(0xFF8E8E8E)
 val TextFieldTColor = Color(0xFF666666)
+val ProcedureBorderColor = Color(0xFF051D4D)
