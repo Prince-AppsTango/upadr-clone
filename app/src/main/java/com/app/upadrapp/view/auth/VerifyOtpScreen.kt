@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
@@ -41,11 +43,12 @@ import com.app.upadrapp.utils.SafeArea
 
 @Composable
 fun VerifyOtpScreen(navController: NavController) {
+    val scrollState = rememberScrollState()
     SafeArea {
         Column(
             modifier = Modifier
                 .background(Color.White)
-                .fillMaxSize(1f)
+                .fillMaxSize(1f).verticalScroll(scrollState)
 
         ) {
             IconButton(onClick = {
@@ -82,7 +85,9 @@ fun VerifyOtpScreen(navController: NavController) {
                         navController.navigate(Constant.CHANGE_PASSWORD_SCREEN)
                     })
                 }
-                Text(text = "Change Email?" , color = MediumTurquoise, modifier = Modifier.fillMaxWidth().clickable { navController.navigate(Constant.FORGOT_PASSWORD_SCREEN) }, textAlign = TextAlign.Center, fontSize = 14.sp, fontWeight = FontWeight.W600)
+                Text(text = "Change Email?" , color = MediumTurquoise, modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { navController.navigate(Constant.FORGOT_PASSWORD_SCREEN) }, textAlign = TextAlign.Center, fontSize = 14.sp, fontWeight = FontWeight.W600)
             }
         }
     }

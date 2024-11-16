@@ -33,7 +33,7 @@ fun OtpInputBox() {
     val focusManager = LocalFocusManager.current
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         repeat(6) { index ->
