@@ -14,3 +14,5 @@ val LightCyan = Color(0xFFECFAFE)
 val DarkBlue = Color(0xFF013399)
 val MediumTurquoise = Color(0xFF4DCDCD)
 val LightSlateBlue = Color(0xFF81ADBA)
+val Black = Color.Black
+val SubTitleColor = Color(0xFF4F4F4F)
