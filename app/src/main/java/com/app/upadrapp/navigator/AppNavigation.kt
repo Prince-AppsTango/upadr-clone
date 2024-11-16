@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.app.upadrapp.utils.Constant
+import com.app.upadrapp.view.auth.ChangePasswordScreen
 import com.app.upadrapp.view.auth.ForgotPasswordScreen
 import com.app.upadrapp.view.auth.LoginScreen
 import com.app.upadrapp.view.auth.SignUpScreen
@@ -44,6 +45,9 @@ fun AppNavigation() {
             }
             composable(route= Constant.VERIFY_OTP_SCREEN) { 
                 VerifyOtpScreen(navController = navController)
+            }
+            composable(route= Constant.CHANGE_PASSWORD_SCREEN) {
+                ChangePasswordScreen(navController = navController)
             }
         }
     }

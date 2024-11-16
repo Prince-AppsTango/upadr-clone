@@ -79,6 +79,7 @@ fun VerifyOtpScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(0.dp, 0.dp, 0.dp, 10.dp), contentAlignment = Alignment.Center) {
                     CustomButton(text = "Verify", width = 300, onClick = {
+                        navController.navigate(Constant.CHANGE_PASSWORD_SCREEN)
                     })
                 }
                 Text(text = "Change Email?" , color = MediumTurquoise, modifier = Modifier.fillMaxWidth().clickable { navController.navigate(Constant.FORGOT_PASSWORD_SCREEN) }, textAlign = TextAlign.Center, fontSize = 14.sp, fontWeight = FontWeight.W600)
