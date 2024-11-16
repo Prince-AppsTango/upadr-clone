@@ -19,9 +19,9 @@ import com.app.upadrapp.R
 import com.app.upadrapp.ui.theme.LightCyan
 
 @Composable
-fun TopDrawerNavigation() {
+fun TopDrawerNavigation(elevation: Int = 0) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.background(
-        LightCyan).fillMaxWidth().shadow(elevation = 10.dp, spotColor = Color.Transparent).padding(5.dp,0.dp)) {
+        LightCyan).fillMaxWidth().shadow(elevation = elevation.dp, spotColor = Color.Transparent).padding(5.dp,0.dp)) {
         IconButton(onClick = { /*TODO*/ },modifier = Modifier.size(50.dp) ) {
             Image(painter = painterResource(id = R.drawable.drawermenu), contentDescription = "drawerMenu")
         }
