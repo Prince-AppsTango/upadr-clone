@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +28,6 @@ import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.shared.CustomTextField
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
-import com.app.upadrapp.ui.theme.LightCyan
 import com.app.upadrapp.ui.theme.SubTitleColor
 import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
@@ -59,7 +56,7 @@ fun ForgotPasswordScreen(navController: NavController) {
               Column(modifier = Modifier
                    .fillMaxSize(1f)
                    .padding(20.dp, 0.dp)) {
-                   Title(text = "Forgot Your Password?", color = Color.Black)
+                   Title(text = "Forgot Your Password?", color = Color.Black,fontSize = 24)
                    Spacer(modifier = Modifier.height(10.dp))
                    Subtitle(text = "Please enter the email or phone number you signed up with to reset your password", color = SubTitleColor)
                    Spacer(modifier = Modifier.height(50.dp))
