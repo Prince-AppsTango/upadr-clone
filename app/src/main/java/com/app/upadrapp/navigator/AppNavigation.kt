@@ -39,7 +39,7 @@ fun AppNavigation() {
                 SignUpScreen(navController)
             }
             composable(route=Constant.FORGOT_PASSWORD_SCREEN){
-              ForgotPasswordScreen()
+              ForgotPasswordScreen(navController)
             }
         }
     }
