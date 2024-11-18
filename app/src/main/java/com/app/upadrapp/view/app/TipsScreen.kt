@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
@@ -28,7 +29,7 @@ import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.utils.SafeArea
 
 @Composable
-fun TipsScreen(drawerState: DrawerState) {
+fun TipsScreen(drawerState: DrawerState,navController: NavController) {
     val data = listOf(
         "#Procedures1",
         "#Procedures2",
@@ -43,7 +44,7 @@ fun TipsScreen(drawerState: DrawerState) {
                 .background(Color.White)
                 .fillMaxSize(1f)
         ) {
-            TopDrawerNavigation(elevation = 8, drawerState = drawerState)
+            TopDrawerNavigation(elevation = 8, drawerState = drawerState, navController =navController )
                 LazyColumn {
                     item {
                         Column(

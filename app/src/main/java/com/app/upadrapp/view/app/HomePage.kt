@@ -29,7 +29,7 @@ fun HomePage(navController: NavController,drawerState: DrawerState) {
                 .background(LightCyan)
                 .fillMaxSize(1f)
         ) {
-            TopDrawerNavigation(drawerState = drawerState)
+            TopDrawerNavigation(drawerState = drawerState, navController = navController)
             if(increment.value==1){
                 Step1(increment = increment.value, onClick = { increment.value += 1 })
             }else{

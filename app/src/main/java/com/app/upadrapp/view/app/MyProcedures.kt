@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.app.upadrapp.shared.ButtonWithIcon
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
@@ -21,14 +22,14 @@ import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.utils.SafeArea
 
 @Composable
-fun MyProcedures(drawerState: DrawerState) {
+fun MyProcedures(drawerState: DrawerState,navController: NavController) {
     SafeArea {
         Column(
             modifier = Modifier
                 .background(Color.White)
                 .fillMaxSize(1f)
         ) {
-            TopDrawerNavigation( elevation = 8, drawerState = drawerState)
+            TopDrawerNavigation( elevation = 8, drawerState = drawerState, navController = navController)
             Column(  modifier = Modifier
                 .fillMaxSize(1f)
                 .padding(20.dp)) {

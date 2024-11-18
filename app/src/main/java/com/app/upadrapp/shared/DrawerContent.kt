@@ -69,9 +69,15 @@ fun DrawerContent(drawerState: DrawerState,navController: NavController) {
             DrawerMenuItem("Tips", painterResource(id = R.drawable.tipsicon), imageText = "tipsIcon",{
                 navController.navigate(Constant.TIPS_SCREEN)
             },drawerState)
-            DrawerMenuItem("Surveys", painterResource(id = R.drawable.surveyicon), imageText = "surveyIcon",{},drawerState)
-            DrawerMenuItem("Settings", painterResource(id = R.drawable.settingsicon), imageText = "settingsIcon",{}, drawerState)
-            DrawerMenuItem("Notifications", painterResource(id = R.drawable.notficationiconwhite), imageText = "notficationIconWhite",{},drawerState)
+            DrawerMenuItem("Surveys", painterResource(id = R.drawable.surveyicon), imageText = "surveyIcon",{
+                navController.navigate(Constant.SURVEY_SCREEN)
+            },drawerState)
+            DrawerMenuItem("Settings", painterResource(id = R.drawable.settingsicon), imageText = "settingsIcon",{
+                navController.navigate(Constant.SETTING_SCREEN)
+            }, drawerState)
+            DrawerMenuItem("Notifications", painterResource(id = R.drawable.notficationiconwhite), imageText = "notficationIconWhite",{
+                navController.navigate(Constant.NOTIFICATION_SCREEN)
+            },drawerState)
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
