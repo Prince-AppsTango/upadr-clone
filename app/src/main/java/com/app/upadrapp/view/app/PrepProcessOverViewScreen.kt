@@ -32,10 +32,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.utils.prepSteps
 
@@ -141,8 +143,13 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                         Spacer(modifier = Modifier.height(30.dp))
                     }
                     Spacer(modifier = Modifier.height(30.dp))
+                    }
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    CustomButton(text = "FAQ’s and Tips", width =300 ) {
+                        navController.navigate(Constant.TIPS_SCREEN)
+                    }
                 }
-
+                Spacer(modifier = Modifier.height(40.dp))
             }
         }
 
