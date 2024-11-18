@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.LightCyan
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.view.app.steps.Step1
 import com.app.upadrapp.view.app.steps.Step2
@@ -31,7 +32,9 @@ fun HomePage(navController: NavController) {
             if(increment.value==1){
                 Step1(increment = increment.value, onClick = { increment.value += 1 })
             }else{
-                Step2(onClick = {}, onBackButtonClick = {increment.value -= 1})
+                Step2(onClick = {
+                                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                }, onBackButtonClick = {increment.value -= 1})
             }
         }
     }

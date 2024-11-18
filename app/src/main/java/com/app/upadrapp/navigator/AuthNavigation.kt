@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.view.app.HomePage
+import com.app.upadrapp.view.app.PrepProcessOverviewScreen
 import com.app.upadrapp.view.auth.ChangePasswordScreen
 import com.app.upadrapp.view.auth.ForgotPasswordScreen
 import com.app.upadrapp.view.auth.LoginScreen
@@ -38,6 +39,9 @@ fun AuthNavigation(navController: NavHostController) {
         //App Navigation
         composable(route = Constant.HOME_SCREEN) {
             HomePage(navController)
+        }
+        composable(route = Constant.PREP_PROCESS_OVERVIEW_SCREEN) {
+            PrepProcessOverviewScreen(navController)
         }
     }
 }
