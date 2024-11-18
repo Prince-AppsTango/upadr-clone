@@ -15,14 +15,16 @@ import com.app.upadrapp.view.auth.VerifyOtpScreen
 import com.app.upadrapp.view.auth.WelcomeScreen
 
 @Composable
-fun AuthNavigation(navController: NavHostController) {
+fun AuthNavigation(navController: NavHostController,onClick:()->Unit) {
     NavHost(navController = navController, startDestination = Constant.WELCOME_SCREEN) {
         //Auth navigation
         composable(route = Constant.WELCOME_SCREEN) {
             WelcomeScreen(navController)
         }
         composable(route = Constant.LOGIN_SCREEN) {
-            LoginScreen(navController)
+            LoginScreen(navController){
+                onClick()
+            }
         }
         composable(route = Constant.SIGNUP_SCREEN) {
             SignUpScreen(navController)
@@ -35,13 +37,6 @@ fun AuthNavigation(navController: NavHostController) {
         }
         composable(route = Constant.CHANGE_PASSWORD_SCREEN) {
             ChangePasswordScreen(navController)
-        }
-        //App Navigation
-        composable(route = Constant.HOME_SCREEN) {
-            HomePage(navController)
-        }
-        composable(route = Constant.PREP_PROCESS_OVERVIEW_SCREEN) {
-            PrepProcessOverviewScreen(navController)
         }
     }
 }

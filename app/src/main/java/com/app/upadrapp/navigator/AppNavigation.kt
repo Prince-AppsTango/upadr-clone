@@ -12,8 +12,11 @@ import kotlinx.coroutines.delay
 fun AppNavigation() {
     val showSplash = remember { mutableStateOf(true) }
     val navController = rememberNavController()
+    val isAuthenticated = remember {
+        mutableStateOf(false)
+    }
 
-    LaunchedEffect(Unit) {
+        LaunchedEffect(Unit) {
         delay(3000) // Show splash screen for 3 seconds
         showSplash.value = false
     }
@@ -21,6 +24,12 @@ fun AppNavigation() {
     if (showSplash.value) {
         SplashScreen()
     } else {
-       AuthNavigation(navController)
+        if(isAuthenticated.value){
+            MainNavigation(navController = navController)
+        }else{
+            AuthNavigation(navController){
+                isAuthenticated.value = true
+            }
+        }
     }
 }

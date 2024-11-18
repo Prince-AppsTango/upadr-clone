@@ -41,7 +41,7 @@ import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController,onClick:() -> Unit) {
     val email = remember {
         mutableStateOf("")
     }
@@ -97,9 +97,7 @@ fun LoginScreen(navController: NavController) {
                         }, textAlign = TextAlign.End, color = MediumTurquoise)
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        CustomButton(text = "Login", width = 300, onClick = {
-                            navController.navigate(Constant.HOME_SCREEN)
-                        })
+                        CustomButton(text = "Login", width = 300, onClick = {onClick()})
                     }
                     Spacer(modifier = Modifier.height(25.dp))
                     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
