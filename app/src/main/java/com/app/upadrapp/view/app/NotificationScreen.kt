@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.app.upadrapp.shared.BackButtonNavigation
 import com.app.upadrapp.shared.Title
-import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.utils.SafeArea
 
@@ -32,7 +31,7 @@ fun NotificationScreen(drawerState:DrawerState,navController: NavController) {
                     .fillMaxSize(1f)
                     .padding(20.dp,10.dp)
             ) {
-                Title(text = "Notifications", color = Black, fontSize = 24)
+                Title(text = "Notifications", color = Black, fontSize = 20)
             }
         }
     }

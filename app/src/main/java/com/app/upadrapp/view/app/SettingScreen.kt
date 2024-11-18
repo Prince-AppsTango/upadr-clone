@@ -30,7 +30,7 @@ fun SettingScreen(drawerState:DrawerState,navController: NavController) {
                     .fillMaxSize(1f)
                     .padding(20.dp,10.dp)
             ) {
-                Title(text = "Settings", color = Black, fontSize = 24)
+                Title(text = "Settings", color = Black, fontSize = 20)
             }
         }
     }

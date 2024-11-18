@@ -8,6 +8,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Subtitle(text:String, fontSize:Int = 16,  color: Color = Color.White,modifier: Modifier = Modifier) {
-    Text(text = text, color = color, fontSize = fontSize.sp, fontWeight = FontWeight.Normal, modifier = modifier)
+fun Subtitle(text:String, fontSize:Int = 16,  color: Color = Color.White,modifier: Modifier = Modifier,maxLines:Int=999) {
+    Text(text = text, color = color, fontSize = fontSize.sp, fontWeight = FontWeight.Normal, modifier = modifier, maxLines =maxLines )
 }

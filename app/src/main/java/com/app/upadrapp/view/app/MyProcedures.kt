@@ -33,7 +33,7 @@ fun MyProcedures(drawerState: DrawerState,navController: NavController) {
             Column(  modifier = Modifier
                 .fillMaxSize(1f)
                 .padding(20.dp)) {
-                Title(text = "My Procedures", color = Black, fontSize = 24)
+                Title(text = "My Procedures", color = Black, fontSize = 20)
                 Spacer(modifier = Modifier.height(10.dp))
                 Subtitle(text = "Upcoming", color = BorderColor, fontSize = 20)
                 Divider(color = BorderColor)

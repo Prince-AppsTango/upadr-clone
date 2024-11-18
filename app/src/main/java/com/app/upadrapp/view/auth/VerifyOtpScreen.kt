@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.app.upadrapp.R
 import com.app.upadrapp.shared.CustomButton
-import com.app.upadrapp.shared.CustomTextField
 import com.app.upadrapp.shared.OtpInputBox
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
@@ -66,7 +65,7 @@ fun VerifyOtpScreen(navController: NavController) {
             Column(modifier = Modifier
                 .fillMaxSize(1f)
                 .padding(20.dp, 0.dp)) {
-                Title(text = "Verify Your Email", color = Color.Black,fontSize = 24)
+                Title(text = "Verify Your Email", color = Color.Black, fontSize = 24)
                 Spacer(modifier = Modifier.height(10.dp))
                 Subtitle(text = "Please enter the 6 digit code sent to email@example.com", color = SubTitleColor)
                 Spacer(modifier = Modifier.height(50.dp))

@@ -56,7 +56,7 @@ fun ForgotPasswordScreen(navController: NavController) {
               Column(modifier = Modifier
                    .fillMaxSize(1f)
                    .padding(20.dp, 0.dp)) {
-                   Title(text = "Forgot Your Password?", color = Color.Black,fontSize = 24)
+                   Title(text = "Forgot Your Password?", color = Color.Black, fontSize = 24)
                    Spacer(modifier = Modifier.height(10.dp))
                    Subtitle(text = "Please enter the email or phone number you signed up with to reset your password", color = SubTitleColor)
                    Spacer(modifier = Modifier.height(50.dp))

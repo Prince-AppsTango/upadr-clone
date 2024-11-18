@@ -29,7 +29,7 @@ fun SurveyScreen(drawerState:DrawerState,navController: NavController) {
                     .fillMaxSize(1f)
                     .padding(20.dp,10.dp)
             ) {
-                Title(text = "Surveys", color = Black, fontSize = 24)
+                Title(text = "Surveys", color = Black, fontSize = 20)
             }
         }
     }

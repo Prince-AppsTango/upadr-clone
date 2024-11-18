@@ -31,7 +31,7 @@ fun FaqScreen(drawerState:DrawerState,navController: NavController) {
                     .fillMaxSize(1f)
                     .padding(20.dp,10.dp)
             ) {
-                Title(text = "Faq Screen", color = Black, fontSize = 24)
+                Title(text = "Faq Screen", color = Black, fontSize = 20)
             }
         }
     }
