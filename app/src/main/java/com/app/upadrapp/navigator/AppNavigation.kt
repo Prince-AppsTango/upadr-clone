@@ -25,7 +25,7 @@ fun AppNavigation() {
         SplashScreen()
     } else {
         if(isAuthenticated.value){
-            MainNavigation(navController = navController)
+           DrawerNavigation(navController = navController)
         }else{
             AuthNavigation(navController){
                 isAuthenticated.value = true
