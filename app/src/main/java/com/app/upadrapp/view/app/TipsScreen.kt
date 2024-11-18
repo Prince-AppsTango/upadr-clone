@@ -26,6 +26,7 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.ui.theme.DarkBlue
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 
 @Composable
@@ -58,7 +59,9 @@ fun TipsScreen(drawerState: DrawerState,navController: NavController) {
                     items(data){
                         Card(
                             modifier = Modifier
-                                .fillMaxWidth().clickable {  }
+                                .fillMaxWidth().clickable {
+                                    navController.navigate(Constant.FAQ_SCREEN)
+                                }
                                 .height(70.dp)
                                 .padding(20.dp, 8.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.White),

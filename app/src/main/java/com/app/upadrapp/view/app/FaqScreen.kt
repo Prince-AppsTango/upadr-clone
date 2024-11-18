@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.app.upadrapp.shared.BackButtonNavigation
 import com.app.upadrapp.shared.Title
-import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.utils.SafeArea
 
@@ -25,7 +25,7 @@ fun FaqScreen(drawerState:DrawerState,navController: NavController) {
                 .background(Color.White)
                 .fillMaxSize(1f)
         ) {
-            TopDrawerNavigation(elevation = 8, drawerState = drawerState,navController)
+            BackButtonNavigation(elevation = 8,navController)
             Column(
                 modifier = Modifier
                     .fillMaxSize(1f)
