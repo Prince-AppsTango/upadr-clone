@@ -10,6 +10,7 @@ import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.view.app.HomePage
 import com.app.upadrapp.view.app.MyProcedures
 import com.app.upadrapp.view.app.PrepProcessOverviewScreen
+import com.app.upadrapp.view.app.TipsScreen
 
 @Composable
 fun MainNavigation(navController: NavHostController,drawerState: DrawerState) {
@@ -22,6 +23,9 @@ fun MainNavigation(navController: NavHostController,drawerState: DrawerState) {
         }
         composable(route = Constant.MY_PROCEDURE_SCREEN) {
             MyProcedures(drawerState)
+        }
+        composable(route = Constant.TIPS_SCREEN) {
+            TipsScreen(drawerState)
         }
     }
 }

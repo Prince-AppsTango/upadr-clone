@@ -66,7 +66,9 @@ fun DrawerContent(drawerState: DrawerState,navController: NavController) {
             DrawerMenuItem("My Procedures", painterResource(id =R.drawable.procedureicon), imageText = "procedureIcon",{
                 navController.navigate(Constant.MY_PROCEDURE_SCREEN)
             }, drawerState)
-            DrawerMenuItem("Tips", painterResource(id = R.drawable.tipsicon), imageText = "tipsIcon",{},drawerState)
+            DrawerMenuItem("Tips", painterResource(id = R.drawable.tipsicon), imageText = "tipsIcon",{
+                navController.navigate(Constant.TIPS_SCREEN)
+            },drawerState)
             DrawerMenuItem("Surveys", painterResource(id = R.drawable.surveyicon), imageText = "surveyIcon",{},drawerState)
             DrawerMenuItem("Settings", painterResource(id = R.drawable.settingsicon), imageText = "settingsIcon",{}, drawerState)
             DrawerMenuItem("Notifications", painterResource(id = R.drawable.notficationiconwhite), imageText = "notficationIconWhite",{},drawerState)
