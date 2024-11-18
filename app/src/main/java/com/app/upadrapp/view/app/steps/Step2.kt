@@ -1,6 +1,5 @@
 package com.app.upadrapp.view.app.steps
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -45,6 +44,8 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.ui.theme.MediumTurquoise
+import com.app.upadrapp.utils.formatDateFromTimestamp
+import com.app.upadrapp.utils.formatTimeFromTimePickerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +59,9 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit) {
     val selectedDate = remember {
         mutableStateOf("")
     }
-    Log.d("selectedDate", selectedDate.value.toString())
+    val selectedTime = remember {
+        mutableStateOf("")
+    }
     Column {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
             Image(
@@ -92,7 +95,7 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit) {
                 .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = if (selectedDate.value != "") selectedDate.value else "mm/dd/yyyy")
+                Text(text = if (selectedDate.value != "") selectedDate.value else "mm/dd/yyyy", color = BorderColor)
                 Icon(
                     Icons.Filled.DateRange,
                     contentDescription = "DateRange",
@@ -112,7 +115,7 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit) {
                 .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = if (selectedDate.value != "") selectedDate.value else "HH:MM")
+                Text(text = if (selectedTime.value != "") selectedTime.value else "HH:MM", color = BorderColor)
                 Icon(
                     Icons.Filled.DateRange,
                     contentDescription = "DateRange",
@@ -156,13 +159,19 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit) {
             DatePickerModal(onDismiss = {
                 isDatePickerOpen.value = false
             }, onDateSelected = {
-                selectedDate.value = it.toString()
+                val formatDate = it?.let { it1 -> formatDateFromTimestamp(it1) }
+                selectedDate.value = formatDate.toString()
+                isDatePickerOpen.value = false
             })
         }
         if (isTimePickerOpen.value) {
             DialTimePicker(onDismiss = {
                 isTimePickerOpen.value = false
-            }, onConfirm = {})
+            }, onConfirm = {
+                val formattedTime = formatTimeFromTimePickerState(it)
+                selectedTime.value = formattedTime
+                isTimePickerOpen.value = false
+            })
         }
     }
 }
