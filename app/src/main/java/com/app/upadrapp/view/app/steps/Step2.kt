@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.app.upadrapp.R
+import com.app.upadrapp.shared.Subtitle
+import com.app.upadrapp.shared.Title
 
 @Composable
 fun Step2() {
@@ -35,5 +37,8 @@ fun Step2() {
             .clip(shape = RoundedCornerShape(50.dp, 50.dp))
             .background(Color.White)
             .padding(20.dp, 15.dp)
-    ) {}
+    ) {
+        Title(text = "Next" , color = Color.Black, fontSize = 24)
+        Subtitle(text = "Let’s determine when your procedure is so we can start your prep on schedule.",color = Color(0xFFB9B9B9))
+    }
 }
