@@ -26,7 +26,7 @@ fun DrawerNavigation(navController: NavHostController) {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                DrawerContent(drawerState)
+                DrawerContent(drawerState, navController)
             }
         },
     ) {

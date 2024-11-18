@@ -1,5 +1,6 @@
 package com.app.upadrapp.shared
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,14 +22,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.app.upadrapp.ui.theme.LightSlateBlue
 import kotlinx.coroutines.launch
+import  com.app.upadrapp.R
+import com.app.upadrapp.utils.Constant
 
 @Composable
-fun DrawerContent(drawerState: DrawerState) {
+fun DrawerContent(drawerState: DrawerState,navController: NavController) {
     val scope = rememberCoroutineScope()
 
     Column(
@@ -58,23 +63,27 @@ fun DrawerContent(drawerState: DrawerState) {
             }
         }
         Column(verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.padding(50.dp)) {
-            DrawerMenuItem("My Procedures")
-            DrawerMenuItem("Tips")
-            DrawerMenuItem("Surveys")
-            DrawerMenuItem("Settings")
-            DrawerMenuItem("Notifications")
+            DrawerMenuItem("My Procedures", painterResource(id =R.drawable.procedureicon), imageText = "procedureIcon",{
+                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+            }, drawerState)
+            DrawerMenuItem("Tips", painterResource(id = R.drawable.tipsicon), imageText = "tipsIcon",{},drawerState)
+            DrawerMenuItem("Surveys", painterResource(id = R.drawable.surveyicon), imageText = "surveyIcon",{},drawerState)
+            DrawerMenuItem("Settings", painterResource(id = R.drawable.settingsicon), imageText = "settingsIcon",{}, drawerState)
+            DrawerMenuItem("Notifications", painterResource(id = R.drawable.notficationiconwhite), imageText = "notficationIconWhite",{},drawerState)
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(50.dp, 0.dp)
         ) {
-            Icon(Icons.Filled.DateRange, contentDescription = "DateRange", tint = Color.White)
+            Image(painter = painterResource(id = R.drawable.logout), contentDescription = "logOut",)
             TextButton(onClick = { /*TODO*/ }) {
                 Text(
                     text = "Log Out",
                     color = Color.White,
                     fontWeight = FontWeight.W400,
-                    fontSize = 15.sp
+                    fontSize = 20.sp
                 )
             }
         }
@@ -82,18 +91,25 @@ fun DrawerContent(drawerState: DrawerState) {
 }
 
 @Composable
-fun DrawerMenuItem(text: String) {
+fun DrawerMenuItem(text: String,painter: Painter,imageText:String,onClick:()->Unit,drawerState: DrawerState) {
+    val scope = rememberCoroutineScope()
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Icon(Icons.Filled.DateRange, contentDescription = "DateRange", tint = Color.White)
-        TextButton(onClick = { /* TODO */ }) {
+        Image(painter = painter, contentDescription = imageText)
+        TextButton(onClick = {
+            scope.launch {
+                drawerState.close()
+                onClick()
+            }
+
+        }) {
             Text(
                 text = text,
                 color = Color.White,
                 fontWeight = FontWeight.W400,
-                fontSize = 15.sp
+                fontSize = 20.sp
             )
         }
     }
