@@ -31,7 +31,7 @@ fun HomePage(navController: NavController) {
             if(increment.value==1){
                 Step1(increment = increment.value, onClick = { increment.value += 1 })
             }else{
-                Step2()
+                Step2(onClick = {}, onBackButtonClick = {increment.value -= 1})
             }
         }
     }
