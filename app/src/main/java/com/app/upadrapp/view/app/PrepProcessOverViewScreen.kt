@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DrawerState
@@ -35,102 +37,115 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.utils.SafeArea
+import com.app.upadrapp.utils.prepSteps
 
 @Composable
 fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerState) {
+    val scrollState =  rememberScrollState()
     SafeArea {
-        Column(
-            modifier = Modifier
-                .background(Color.White)
-                .fillMaxSize(1f)
-        ) {
+        Column {
             TopDrawerNavigation(elevation = 8, drawerState = drawerState, navController)
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp, 10.dp)
+                    .background(Color.White)
+                    .fillMaxSize(1f)
+                    .verticalScroll(scrollState)
             ) {
-               Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
-                Box(modifier = Modifier.fillMaxWidth(0.9f)) {
-                    Title(
-                        text = "Great! Here’s an overview on what your colonoscopy prep process will look like.",
-                        color = Black,
-                        fontSize = 20
-                    )
-                }
-                   IconButton(
-                       onClick = { /*TODO*/ },
-                       modifier = Modifier
-                           .size(60.dp)
-                   ) {
-                       Icon(Icons.Filled.MoreVert, contentDescription = "MoreVert", tint = Color.Gray)
-                   }
-               }
-                Subtitle(
-                    text = "But don’t worry! We will send you notification when these things need to get done so you don’t have to remember it all. ",
-                    color = Black
-                )
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(0.5f)
-                        .padding(20.dp, 0.dp, 0.dp, 0.dp)
-                ) {
-                    Title(text = "Step 1", color = Black)
-                    Title(text = "3 days before procedure", color = Black)
-                    Subtitle(
-                        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
-                        color = Black,
-                        maxLines = 6
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .height(200.dp)
-                        .width(200.dp)
-                        .offset(y = 30.dp, x = 20.dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(Color.Gray)
-                        .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
-                )
-            }
-            Spacer(modifier = Modifier.height(30.dp))
 
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Box(
-                    modifier = Modifier
-                        .height(200.dp)
-                        .width(200.dp)
-                        .offset(y = 30.dp, x = (-20).dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(Color.Gray)
-                        .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
-                )
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(0.dp, 0.dp, 20.dp, 0.dp), horizontalAlignment = Alignment.End
+                        .padding(20.dp, 10.dp)
                 ) {
-                    Title(text = "Step 1", color = Black)
-                    Text(
-                        text = "3 days before procedure",
-                        color = Black,
-                        textAlign = TextAlign.Right,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
-                        color = Black,
-                        fontWeight = FontWeight.Normal,
-                        textAlign = TextAlign.Right,
-                        maxLines = 6
+                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
+                        Box(modifier = Modifier.fillMaxWidth(0.9f)) {
+                            Title(
+                                text = "Great! Here’s an overview on what your colonoscopy prep process will look like.",
+                                color = Black,
+                                fontSize = 20
+                            )
+                        }
+                        IconButton(
+                            onClick = { /*TODO*/ },
+                            modifier = Modifier
+                                .size(60.dp)
+                        ) {
+                            Icon(Icons.Filled.MoreVert, contentDescription = "MoreVert", tint = Color.Gray)
+                        }
+                    }
+                    Subtitle(
+                        text = "But don’t worry! We will send you notification when these things need to get done so you don’t have to remember it all. ",
+                        color = Black
                     )
                 }
-            }
+                Spacer(modifier = Modifier.height(10.dp))
+                prepSteps.forEachIndexed{index, prepStep ->
+                    if(index % 2==0){
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .padding(20.dp, 0.dp, 0.dp, 0.dp)
+                            ) {
+                                Title(text = "Step 1", color = Black)
+                                Title(text = "3 days before procedure", color = Black)
+                                Subtitle(
+                                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
+                                    color = Black,
+                                    maxLines = 6
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .height(200.dp)
+                                    .width(200.dp)
+                                    .offset(y = 30.dp, x = 20.dp)
+                                    .clip(RoundedCornerShape(100.dp))
+                                    .background(Color.Gray)
+                                    .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(30.dp))
+                    }else{
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Box(
+                                modifier = Modifier
+                                    .height(200.dp)
+                                    .width(200.dp)
+                                    .offset(y = 30.dp, x = (-20).dp)
+                                    .clip(RoundedCornerShape(100.dp))
+                                    .background(Color.Gray)
+                                    .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(0.dp, 0.dp, 20.dp, 0.dp), horizontalAlignment = Alignment.End
+                            ) {
+                                Title(text = "Step 1", color = Black)
+                                Text(
+                                    text = "3 days before procedure",
+                                    color = Black,
+                                    textAlign = TextAlign.Right,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Text(
+                                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
+                                    color = Black,
+                                    fontWeight = FontWeight.Normal,
+                                    textAlign = TextAlign.Right,
+                                    maxLines = 6
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(30.dp))
+                    }
+                    Spacer(modifier = Modifier.height(30.dp))
+                }
 
+            }
         }
+
     }
 }
 
