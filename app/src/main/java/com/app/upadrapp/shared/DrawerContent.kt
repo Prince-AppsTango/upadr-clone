@@ -64,7 +64,7 @@ fun DrawerContent(drawerState: DrawerState,navController: NavController) {
         }
         Column(verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.padding(50.dp)) {
             DrawerMenuItem("My Procedures", painterResource(id =R.drawable.procedureicon), imageText = "procedureIcon",{
-                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                navController.navigate(Constant.MY_PROCEDURE_SCREEN)
             }, drawerState)
             DrawerMenuItem("Tips", painterResource(id = R.drawable.tipsicon), imageText = "tipsIcon",{},drawerState)
             DrawerMenuItem("Surveys", painterResource(id = R.drawable.surveyicon), imageText = "surveyIcon",{},drawerState)

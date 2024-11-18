@@ -23,7 +23,7 @@ import com.app.upadrapp.ui.theme.Black
 
 
 @Composable
-fun ButtonWithIcon(text:String) {
+fun ButtonWithIcon(text:String,fontSize:Int=15) {
   Card(modifier = Modifier
       .fillMaxWidth().clickable {  }
       .background(Color.White)
@@ -34,7 +34,7 @@ fun ButtonWithIcon(text:String) {
               Color.White
           ).padding(10.dp,0.dp)
           .height(50.dp)) {
-          Title(text = text, color = Black, fontSize = 15)
+          Title(text = text, color = Black, fontSize = fontSize)
           Icon(
               Icons.Filled.KeyboardArrowRight,
               contentDescription = "KeyboardArrowRight",
