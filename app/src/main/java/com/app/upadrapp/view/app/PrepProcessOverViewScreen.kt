@@ -2,6 +2,7 @@ package com.app.upadrapp.view.app
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,6 +39,7 @@ import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
+import com.app.upadrapp.ui.theme.MediumTurquoise
 import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.utils.prepSteps
@@ -96,6 +99,8 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                     color = Black,
                                     maxLines = 6
                                 )
+                                Spacer(modifier = Modifier.height(5.dp))
+                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {  })
                             }
                             Box(
                                 modifier = Modifier
@@ -138,6 +143,8 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                     textAlign = TextAlign.Right,
                                     maxLines = 6
                                 )
+                                Spacer(modifier = Modifier.height(5.dp))
+                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {  })
                             }
                         }
                         Spacer(modifier = Modifier.height(30.dp))
