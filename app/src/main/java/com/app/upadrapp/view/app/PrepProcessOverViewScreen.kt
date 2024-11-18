@@ -100,7 +100,9 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                     maxLines = 6
                                 )
                                 Spacer(modifier = Modifier.height(5.dp))
-                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {  })
+                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
+                                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
+                                })
                             }
                             Box(
                                 modifier = Modifier
@@ -144,7 +146,9 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                     maxLines = 6
                                 )
                                 Spacer(modifier = Modifier.height(5.dp))
-                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {  })
+                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
+                                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
+                                })
                             }
                         }
                         Spacer(modifier = Modifier.height(30.dp))

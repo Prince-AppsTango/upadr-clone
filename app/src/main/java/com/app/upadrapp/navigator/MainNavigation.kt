@@ -11,6 +11,7 @@ import com.app.upadrapp.view.app.FaqScreen
 import com.app.upadrapp.view.app.HomePage
 import com.app.upadrapp.view.app.MyProcedures
 import com.app.upadrapp.view.app.NotificationScreen
+import com.app.upadrapp.view.app.PrepProcessOverviewDetailsScreen
 import com.app.upadrapp.view.app.PrepProcessOverviewScreen
 import com.app.upadrapp.view.app.SettingScreen
 import com.app.upadrapp.view.app.SurveyScreen
@@ -42,6 +43,9 @@ fun MainNavigation(navController: NavHostController,drawerState: DrawerState) {
         }
         composable(route = Constant.FAQ_SCREEN) {
             FaqScreen(drawerState,navController)
+        }
+        composable(route = Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN) {
+            PrepProcessOverviewDetailsScreen(drawerState,navController)
         }
     }
 }
