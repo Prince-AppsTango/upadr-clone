@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +19,7 @@ import com.app.upadrapp.view.app.steps.Step1
 import com.app.upadrapp.view.app.steps.Step2
 
 @Composable
-fun HomePage(navController: NavController) {
+fun HomePage(navController: NavController,drawerState: DrawerState) {
    val increment = remember {
        mutableIntStateOf(1)
    }
@@ -28,7 +29,7 @@ fun HomePage(navController: NavController) {
                 .background(LightCyan)
                 .fillMaxSize(1f)
         ) {
-            TopDrawerNavigation()
+            TopDrawerNavigation(drawerState = drawerState)
             if(increment.value==1){
                 Step1(increment = increment.value, onClick = { increment.value += 1 })
             }else{
