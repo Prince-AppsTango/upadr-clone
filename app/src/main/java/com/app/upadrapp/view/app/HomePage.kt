@@ -31,7 +31,7 @@ fun HomePage(navController: NavController,drawerState: DrawerState) {
         ) {
             TopDrawerNavigation(drawerState = drawerState, navController = navController)
             if(increment.value==1){
-                Step1(increment = increment.value, onClick = { increment.value += 1 })
+                Step1(increment = increment.value, onClick = { increment.value += 1 },navController)
             }else{
                 Step2(onClick = {
                                 navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)

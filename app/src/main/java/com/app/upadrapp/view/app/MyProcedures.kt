@@ -38,12 +38,12 @@ fun MyProcedures(drawerState: DrawerState,navController: NavController) {
                 Subtitle(text = "Upcoming", color = BorderColor, fontSize = 20)
                 Divider(color = BorderColor)
                 Spacer(modifier = Modifier.height(10.dp))
-                ButtonWithIcon(text = "Colonoscopy", fontSize = 20)
+                ButtonWithIcon(text = "Colonoscopy", fontSize = 20,{})
                 Spacer(modifier = Modifier.height(25.dp))
                 Subtitle(text = "Completed", color = BorderColor, fontSize = 20)
                 Divider(color = BorderColor)
                 Spacer(modifier = Modifier.height(10.dp))
-                ButtonWithIcon(text = "Colonoscopy", fontSize = 20)
+                ButtonWithIcon(text = "Colonoscopy", fontSize = 20,{} )
             }
         }
     }

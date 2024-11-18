@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.app.upadrapp.R
 import com.app.upadrapp.shared.ButtonWithIcon
 import com.app.upadrapp.shared.Subtitle
@@ -43,9 +44,10 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.ui.theme.ProcedureBorderColor
 import com.app.upadrapp.ui.theme.SubTitleColor
+import com.app.upadrapp.utils.Constant
 
 @Composable
-fun Step1(increment:Int,onClick:()->Unit) {
+fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
     val data = listOf("#Procedures1","#Procedures2","#Procedures3","#Procedures4","#Procedures5","#Procedures6")
     var selectedProcedure = remember {
         mutableStateOf("")
@@ -97,7 +99,9 @@ fun Step1(increment:Int,onClick:()->Unit) {
         }
         Spacer(modifier = Modifier.height(10.dp))
         Column {
-            ButtonWithIcon(text = "My Procedures")
+            ButtonWithIcon(text = "My Procedures"){
+                navController.navigate(Constant.MY_PROCEDURE_SCREEN)
+            }
         }
         Spacer(modifier = Modifier.height(15.dp))
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomEnd) {
