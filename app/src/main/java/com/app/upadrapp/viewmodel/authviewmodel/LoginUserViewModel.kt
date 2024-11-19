@@ -13,16 +13,20 @@ import java.lang.Exception
 
 class LoginUserViewModel : ViewModel() {
     private val getAuthApiRepository = AuthApiRepository()
-    private val _loginData = MutableLiveData<LoginResponseModel>()
-    val loginData:LiveData<LoginResponseModel> = _loginData
+    private val _loginData = MutableLiveData<LoginResponseModel?>()
+    val loginData: LiveData<LoginResponseModel?> = _loginData
+
     fun getSignIn(loginParameterModel: LoginParameterModel) {
         viewModelScope.launch {
             try {
                 val response = getAuthApiRepository.getSignIn(loginParameterModel)
-                Log.d("responsebylogin",response.toString())
-                    _loginData.value=response
+                if (response.isSuccessful && response.body() != null) {
+                    _loginData.value = response.body()
+                } else {
+                    _loginData.value = null
+                }
             } catch (e: Exception) {
-                Log.d("login Error", "Error occur")
+                _loginData.value = null
             }
         }
     }
