@@ -42,6 +42,7 @@ import com.app.upadrapp.ui.theme.LightCyan
 import com.app.upadrapp.ui.theme.MediumTurquoise
 import com.app.upadrapp.ui.theme.SubTitleColor
 import com.app.upadrapp.utils.Constant
+import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 
@@ -54,6 +55,8 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
         mutableStateOf("")
     }
     val authViewModel:LoginUserViewModel = viewModel()
+    val loginData = authViewModel.loginData.observeAsState()
+    val data = loginData.value
     val scrollState = rememberScrollState()
     SafeArea {
         Column(
@@ -104,7 +107,7 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
                         }, textAlign = TextAlign.End, color = MediumTurquoise)
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        CustomButton(text = "Login", width = 300, onClick = {
+                        CustomButton(text = "Login", width = 300, loading = data is NetworkResponse.Loading, onClick = {
                             onClick()
                             val data = LoginParameterModel(
                                 emailAddress = email.value,
