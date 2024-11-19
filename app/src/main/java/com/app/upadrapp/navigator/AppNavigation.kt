@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.view.auth.SplashScreen
 import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 import kotlinx.coroutines.delay
@@ -16,6 +17,9 @@ import kotlinx.coroutines.delay
 fun AppNavigation() {
     val showSplash = remember { mutableStateOf(true) }
     val navController = rememberNavController()
+    val authViewModel:LoginUserViewModel = viewModel()
+    val loginData = authViewModel.loginData.observeAsState()
+    val data = loginData.value
     val isAuthenticated = remember {
         mutableStateOf(false)
     }
@@ -28,13 +32,10 @@ fun AppNavigation() {
     if (showSplash.value) {
         SplashScreen()
     } else {
-        if(isAuthenticated.value){
+        if(data is NetworkResponse.Success){
            DrawerNavigation(navController = navController)
         }else{
-            AuthNavigation(navController){
-                isAuthenticated.value= false
-            }
-
+            AuthNavigation(navController,{  isAuthenticated.value= false},authViewModel)
         }
     }
 }

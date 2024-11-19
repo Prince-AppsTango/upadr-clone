@@ -47,15 +47,14 @@ import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 
 @Composable
-fun LoginScreen(navController: NavController,onClick:() -> Unit) {
+fun LoginScreen(navController: NavController,onClick:() -> Unit,viewModel:LoginUserViewModel) {
     val email = remember {
         mutableStateOf("")
     }
     val password = remember {
         mutableStateOf("")
     }
-    val authViewModel:LoginUserViewModel = viewModel()
-    val loginData = authViewModel.loginData.observeAsState()
+    val loginData = viewModel.loginData.observeAsState()
     val data = loginData.value
     val scrollState = rememberScrollState()
     SafeArea {
@@ -113,7 +112,7 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
                                 emailAddress = email.value,
                                 password = password.value
                             )
-                            authViewModel.getSignIn(data)
+                            viewModel.getSignIn(data)
                         })
                     }
                     Spacer(modifier = Modifier.height(25.dp))
