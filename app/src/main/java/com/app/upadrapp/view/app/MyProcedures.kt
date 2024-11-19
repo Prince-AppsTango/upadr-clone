@@ -19,6 +19,7 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.ui.theme.BorderColor
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 
 @Composable
@@ -38,12 +39,16 @@ fun MyProcedures(drawerState: DrawerState,navController: NavController) {
                 Subtitle(text = "Upcoming", color = BorderColor, fontSize = 20)
                 Divider(color = BorderColor)
                 Spacer(modifier = Modifier.height(10.dp))
-                ButtonWithIcon(text = "Colonoscopy", fontSize = 20,{})
+                ButtonWithIcon(text = "Colonoscopy", fontSize = 20) {
+                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                }
                 Spacer(modifier = Modifier.height(25.dp))
                 Subtitle(text = "Completed", color = BorderColor, fontSize = 20)
                 Divider(color = BorderColor)
                 Spacer(modifier = Modifier.height(10.dp))
-                ButtonWithIcon(text = "Colonoscopy", fontSize = 20,{} )
+                ButtonWithIcon(text = "Colonoscopy", fontSize = 20) {
+                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                }
             }
         }
     }
