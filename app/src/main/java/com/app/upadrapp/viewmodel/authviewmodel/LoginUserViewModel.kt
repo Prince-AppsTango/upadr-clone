@@ -8,25 +8,29 @@ import androidx.lifecycle.viewModelScope
 import com.app.upadrapp.model.authmodel.loginuserresponsemodel.LoginParameterModel
 import com.app.upadrapp.model.authmodel.loginuserresponsemodel.LoginResponseModel
 import com.app.upadrapp.model.repository.authrepository.AuthApiRepository
+import com.app.upadrapp.utils.NetworkResponse
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class LoginUserViewModel : ViewModel() {
     private val getAuthApiRepository = AuthApiRepository()
-    private val _loginData = MutableLiveData<LoginResponseModel?>()
-    val loginData: LiveData<LoginResponseModel?> = _loginData
+    private val _loginData = MutableLiveData<NetworkResponse<LoginResponseModel>>()
+    val loginData: LiveData<NetworkResponse<LoginResponseModel>> = _loginData
 
     fun getSignIn(loginParameterModel: LoginParameterModel) {
+            _loginData.value = NetworkResponse.Loading
         viewModelScope.launch {
             try {
                 val response = getAuthApiRepository.getSignIn(loginParameterModel)
                 if (response.isSuccessful && response.body() != null) {
-                    _loginData.value = response.body()
+                     response.body()?.let {
+                         _loginData.value = NetworkResponse.Success(it)
+                     }
                 } else {
-                    _loginData.value = null
+                    _loginData.value = NetworkResponse.Error("Failed to login")
                 }
             } catch (e: Exception) {
-                _loginData.value = null
+                _loginData.value = NetworkResponse.Error("Failed to login")
             }
         }
     }
