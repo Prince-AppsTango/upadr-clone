@@ -1,11 +1,15 @@
 package com.app.upadrapp.navigator
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.app.upadrapp.view.auth.SplashScreen
+import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 import kotlinx.coroutines.delay
 
 @Composable
@@ -28,8 +32,9 @@ fun AppNavigation() {
            DrawerNavigation(navController = navController)
         }else{
             AuthNavigation(navController){
-                isAuthenticated.value = false
+                isAuthenticated.value= false
             }
+
         }
     }
 }

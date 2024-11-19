@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.auth
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -57,7 +59,8 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
         Column(
             modifier = Modifier
                 .background(LightCyan)
-                .fillMaxSize(1f).verticalScroll(scrollState)
+                .fillMaxSize(1f)
+                .verticalScroll(scrollState)
         ) {
             Column(
                 modifier = Modifier
@@ -97,7 +100,7 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
                     Text(text = "Forgot Password?", modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                                   navController.navigate(Constant.FORGOT_PASSWORD_SCREEN)
+                            navController.navigate(Constant.FORGOT_PASSWORD_SCREEN)
                         }, textAlign = TextAlign.End, color = MediumTurquoise)
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
