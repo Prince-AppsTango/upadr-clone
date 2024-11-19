@@ -28,7 +28,7 @@ fun AppNavigation() {
            DrawerNavigation(navController = navController)
         }else{
             AuthNavigation(navController){
-                isAuthenticated.value = true
+                isAuthenticated.value = false
             }
         }
     }

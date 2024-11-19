@@ -27,8 +27,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.app.upadrapp.R
+import com.app.upadrapp.model.authmodel.loginuserresponsemodel.LoginParameterModel
 import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.shared.CustomTextField
 import com.app.upadrapp.shared.Subtitle
@@ -39,6 +41,7 @@ import com.app.upadrapp.ui.theme.MediumTurquoise
 import com.app.upadrapp.ui.theme.SubTitleColor
 import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
+import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 
 @Composable
 fun LoginScreen(navController: NavController,onClick:() -> Unit) {
@@ -48,6 +51,7 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
     val password = remember {
         mutableStateOf("")
     }
+    val authViewModel:LoginUserViewModel = viewModel()
     val scrollState = rememberScrollState()
     SafeArea {
         Column(
@@ -97,7 +101,14 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
                         }, textAlign = TextAlign.End, color = MediumTurquoise)
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        CustomButton(text = "Login", width = 300, onClick = {onClick()})
+                        CustomButton(text = "Login", width = 300, onClick = {
+                            onClick()
+                            val data = LoginParameterModel(
+                                emailAddress = email.value,
+                                password = password.value
+                            )
+                            authViewModel.getSignIn(data)
+                        })
                     }
                     Spacer(modifier = Modifier.height(25.dp))
                     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
