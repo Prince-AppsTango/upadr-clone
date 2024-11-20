@@ -1,6 +1,7 @@
 package com.app.upadrapp.viewmodel.authviewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,9 +30,11 @@ class LoginUserViewModel : ViewModel() {
                           saveToDataStore(context = context,it.tokens.accessToken, it.tokens.refreshToken)
                      }
                 } else {
-                    _loginData.value = NetworkResponse.Error("Failed to login")
+                    val errorMessage = response.errorBody()?.string() ?: "An unknown error occurred"
+                    _loginData.value = NetworkResponse.Error(errorMessage)
                 }
             } catch (e: Exception) {
+                Log.d("LoginData","${e.message}")
                 _loginData.value = NetworkResponse.Error("Failed to login")
             }
         }

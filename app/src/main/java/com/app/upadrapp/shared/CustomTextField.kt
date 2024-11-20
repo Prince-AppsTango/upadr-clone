@@ -17,14 +17,15 @@ import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.TextFieldTColor
 
 @Composable
-fun CustomTextField(text: String, value: String, onChangeValue: (it: String) -> Unit,placeholder: String,width:Int=350) {
+fun CustomTextField(text: String, value: String, onChangeValue: (it: String) -> Unit,placeholder: String,width:Int=350,isError:Boolean=false) {
     OutlinedTextField(
         value = value,
         shape = RoundedCornerShape(10.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = BorderColor,
             unfocusedBorderColor = BorderColor,
-            focusedTextColor = BorderColor
+            focusedTextColor = BorderColor,
+            errorBorderColor = Color.Red
         ),
         modifier = Modifier
             .background(Color.White)
@@ -33,11 +34,12 @@ fun CustomTextField(text: String, value: String, onChangeValue: (it: String) -> 
         onValueChange = {
             onChangeValue(it)
         },
+        isError = isError,
         label = {
             Text(text = text, color = TextFieldTColor, fontSize = 14.sp)
         },
         placeholder = {
             Text(text = placeholder, fontSize = 14.sp)
-        }
+        },
     )
 }

@@ -1,6 +1,7 @@
 package com.app.upadrapp.view.auth
 
 import android.util.Log
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContentProviderCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -37,6 +39,7 @@ import com.app.upadrapp.R
 import com.app.upadrapp.model.authmodel.loginuserresponsemodel.LoginParameterModel
 import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.shared.CustomTextField
+import com.app.upadrapp.shared.ErrorText
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.Black
@@ -56,11 +59,17 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
     val password = remember {
         mutableStateOf("")
     }
+    val isEmailValid = remember { mutableStateOf(true) }
+    val isPasswordValid = remember {
+        mutableStateOf(true)
+    }
     val authViewModel:LoginUserViewModel = viewModel()
     val loginData = authViewModel.loginData.observeAsState()
     val data = loginData.value
+    Log.d("LoginData","$data")
     val scrollState = rememberScrollState()
     val context = LocalContext.current
+
     SafeArea {
         Column(
             modifier = Modifier
@@ -95,13 +104,25 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
                         fontSize = 15
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CustomTextField(text = "Email", value = email.value, placeholder = "example@email.com", onChangeValue = {
+                    CustomTextField(text = "Email", value = email.value, placeholder = "example@email.com", isError = !isEmailValid.value, onChangeValue = {
                         email.value = it
+                        isEmailValid.value = isValidEmail(it)
                     })
+                    if (!isEmailValid.value) {
+                        ErrorText(
+                            text = "Please enter a valid email address",
+                        )
+                    }
                     Spacer(modifier = Modifier.height(20.dp))
-                    CustomTextField(text = "Password", placeholder = "password", value = password.value, onChangeValue = {
+                    CustomTextField(text = "Password", placeholder = "password", value = password.value, isError = !isPasswordValid.value, onChangeValue = {
                         password.value = it
+                        isPasswordValid.value = isValidPassword(it)
                     })
+                    if (!isPasswordValid.value) {
+                        ErrorText(
+                            text = "Please enter a valid password",
+                        )
+                    }
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(text = "Forgot Password?", modifier = Modifier
                         .fillMaxWidth()
@@ -111,12 +132,14 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
                     Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                         CustomButton(text = "Login", width = 300, loading = data is NetworkResponse.Loading, onClick = {
-                            onClick()
-                            val data = LoginParameterModel(
-                                emailAddress = email.value,
-                                password = password.value
-                            )
-                            authViewModel.getSignIn(context,data)
+                            if(email.value !=""  && password.value !=""){
+                                onClick()
+                                val data = LoginParameterModel(
+                                    emailAddress = email.value,
+                                    password = password.value
+                                )
+                                authViewModel.getSignIn(context,data)
+                            }
                         })
                     }
                     Spacer(modifier = Modifier.height(25.dp))
@@ -136,4 +159,13 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
             }
         }
     }
+}
+
+//reference from google
+fun isValidEmail(email: String): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
+fun isValidPassword(password: String): Boolean {
+    val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
+    return passwordRegex.matches(password)
 }
