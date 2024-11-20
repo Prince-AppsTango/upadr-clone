@@ -26,7 +26,7 @@ class LoginUserViewModel : ViewModel() {
                 if (response.isSuccessful && response.body() != null) {
                      response.body()?.let {
                          _loginData.value = NetworkResponse.Success(it)
-                          saveToDataStore(context = context,it.tokens.accessToken)
+                          saveToDataStore(context = context,it.tokens.accessToken, it.tokens.refreshToken)
                      }
                 } else {
                     _loginData.value = NetworkResponse.Error("Failed to login")
