@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.app.steps
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,7 +50,8 @@ import com.app.upadrapp.utils.formatTimeFromTimePickerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit) {
+fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit,selectedProcedureId:String) {
+
     val isDatePickerOpen = remember {
         mutableStateOf(false)
     }

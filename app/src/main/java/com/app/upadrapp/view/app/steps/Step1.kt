@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.app.steps
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -58,25 +59,28 @@ import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.viewmodel.appviewmodel.ProcedureApiViewModel
 
 @Composable
-fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
+fun Step1(increment: Int, onClick: (id: String) -> Unit, navController: NavController) {
     var selectedProcedure = remember {
         mutableStateOf("")
     }
-    val procedureApiViewModel : ProcedureApiViewModel = viewModel()
+    var selectedProcedureId = remember {
+        mutableStateOf("")
+    }
+    val procedureApiViewModel: ProcedureApiViewModel = viewModel()
     val allProcedureData = procedureApiViewModel.allProcedure.observeAsState()
 
     LaunchedEffect(key1 = Unit) {
         procedureApiViewModel.getAllProcedure()
     }
-     Column {
-         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
-             Image(
-                 painter = painterResource(id = R.drawable.applogo),
-                 contentDescription = "app logo",
-                 modifier = Modifier.size(190.dp)
-             )
-         }
-     }
+    Column {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
+            Image(
+                painter = painterResource(id = R.drawable.applogo),
+                contentDescription = "app logo",
+                modifier = Modifier.size(190.dp)
+            )
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize(1f)
@@ -84,19 +88,31 @@ fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
             .background(Color.White)
             .padding(20.dp, 15.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Title(text = "Welcome!", color = Color.Black, fontSize = 24)
-            Subtitle(text = "We’re here to get you ready for your procedure and make sure you have everything you need.", color = Color(0xFFB9B9B9))
+            Subtitle(
+                text = "We’re here to get you ready for your procedure and make sure you have everything you need.",
+                color = Color(0xFFB9B9B9)
+            )
             Spacer(modifier = Modifier.height(10.dp))
-            Subtitle(text = "Let’s start with determining what procedure you need to get prepared for...", color = SubTitleColor)
+            Subtitle(
+                text = "Let’s start with determining what procedure you need to get prepared for...",
+                color = SubTitleColor
+            )
             Spacer(modifier = Modifier.height(10.dp))
-            when(val result = allProcedureData.value){
+            when (val result = allProcedureData.value) {
                 is NetworkResponse.Error -> {
                     NoDataFound()
                 }
-                NetworkResponse.Loading ->{
-                   Loader()
+
+                NetworkResponse.Loading -> {
+                    Loader()
                 }
+
                 is NetworkResponse.Success -> {
                     LazyVerticalGrid(
                         modifier = Modifier.fillMaxWidth(),
@@ -108,6 +124,7 @@ fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
                                     .padding(5.dp)
                                     .clickable {
                                         selectedProcedure.value = it?.title.toString()
+                                        selectedProcedureId.value = it?.procedureId.toString()
                                     }
                                     .width(160.dp)
                                     .height(50.dp)
@@ -120,19 +137,28 @@ fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
                                         color = ProcedureBorderColor,
                                         shape = MaterialTheme.shapes.small
                                     ), contentAlignment = Alignment.Center) {
-                                    Title(text = it.title, color = if(selectedProcedure.value == it?.title) Color.White else ProcedureBorderColor, fontSize = 15)
+                                    Title(
+                                        text = it.title,
+                                        color = if (selectedProcedure.value == it?.title) Color.White else ProcedureBorderColor,
+                                        fontSize = 15
+                                    )
                                 }
                             }
                         }
                     }
                 }
-                null -> Box(){}
+
+                null -> Box() {}
             }
         }
-        when(allProcedureData.value) {
+        when (allProcedureData.value) {
             is NetworkResponse.Success -> {
                 Spacer(modifier = Modifier.height(10.dp))
-                Column(modifier = Modifier.fillMaxSize().padding(0.dp,0.dp,0.dp,20.dp), verticalArrangement = Arrangement.Bottom) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(0.dp, 0.dp, 0.dp, 20.dp), verticalArrangement = Arrangement.Bottom
+                ) {
                     ButtonWithIcon(text = "My Procedures") {
                         navController.navigate(Constant.MY_PROCEDURE_SCREEN)
                     }
@@ -143,7 +169,11 @@ fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
                         contentAlignment = Alignment.BottomEnd
                     ) {
                         ExtendedFloatingActionButton(
-                            onClick = { onClick() },
+                            onClick = {
+                                if (selectedProcedureId.value != "") {
+                                    onClick(selectedProcedureId.value)
+                                }
+                            },
                             modifier = Modifier
                                 .width(160.dp)
                                 .height(45.dp),
@@ -166,10 +196,11 @@ fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
                     }
                 }
             }
-                null -> Box(){}
-                is NetworkResponse.Error -> Box(){}
-                NetworkResponse.Loading -> Box(){}
-            }
+
+            null -> Box() {}
+            is NetworkResponse.Error -> Box() {}
+            NetworkResponse.Loading -> Box() {}
+        }
 
     }
 }

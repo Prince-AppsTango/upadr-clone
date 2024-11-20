@@ -24,10 +24,13 @@ import com.app.upadrapp.viewmodel.appviewmodel.MeApiViewModel
 import com.app.upadrapp.viewmodel.appviewmodel.ProcedureApiViewModel
 
 @Composable
-fun HomePage(navController: NavController,drawerState: DrawerState) {
-   val increment = remember {
-       mutableIntStateOf(1)
-   }
+fun HomePage(navController: NavController, drawerState: DrawerState) {
+    val increment = remember {
+        mutableIntStateOf(1)
+    }
+    var selectedProcedureId = remember {
+        mutableStateOf("")
+    }
     SafeArea {
         Column(
             modifier = Modifier
@@ -35,12 +38,15 @@ fun HomePage(navController: NavController,drawerState: DrawerState) {
                 .fillMaxSize(1f)
         ) {
             TopDrawerNavigation(drawerState = drawerState, navController = navController)
-            if(increment.value==1){
-                Step1(increment = increment.value, onClick = { increment.value += 1 },navController)
-            }else{
+            if (increment.value == 1) {
+                Step1(increment = increment.value, onClick = {
+                    selectedProcedureId.value = it
+                    increment.value += 1
+                }, navController)
+            } else {
                 Step2(onClick = {
-                                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
-                }, onBackButtonClick = {increment.value -= 1})
+                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                }, onBackButtonClick = { increment.value -= 1 }, selectedProcedureId = selectedProcedureId.value)
             }
         }
     }
