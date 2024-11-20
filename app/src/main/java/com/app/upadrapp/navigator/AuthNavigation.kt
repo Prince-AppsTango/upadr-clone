@@ -16,14 +16,14 @@ import com.app.upadrapp.view.auth.WelcomeScreen
 import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 
 @Composable
-fun AuthNavigation(navController: NavHostController,onClick:()->Unit,viewModel: LoginUserViewModel) {
+fun AuthNavigation(navController: NavHostController,onClick:()->Unit) {
     NavHost(navController = navController, startDestination = Constant.WELCOME_SCREEN) {
         //Auth navigation
         composable(route = Constant.WELCOME_SCREEN) {
             WelcomeScreen(navController)
         }
         composable(route = Constant.LOGIN_SCREEN) {
-            LoginScreen(navController,{ onClick()},viewModel)
+            LoginScreen(navController,{ onClick()})
         }
         composable(route = Constant.SIGNUP_SCREEN) {
             SignUpScreen(navController)

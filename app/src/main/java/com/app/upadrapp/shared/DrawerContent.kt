@@ -28,15 +28,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.app.upadrapp.MainActivity
 import com.app.upadrapp.ui.theme.LightSlateBlue
 import kotlinx.coroutines.launch
 import  com.app.upadrapp.R
+import com.app.upadrapp.store.saveToDataStore
 import com.app.upadrapp.utils.Constant
 
 @Composable
 fun DrawerContent(drawerState: DrawerState,navController: NavController) {
     val scope = rememberCoroutineScope()
-
+    val context = MainActivity.getAppContext()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,7 +88,11 @@ fun DrawerContent(drawerState: DrawerState,navController: NavController) {
                 .padding(50.dp, 0.dp)
         ) {
             Image(painter = painterResource(id = R.drawable.logout), contentDescription = "logOut",)
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = {
+              scope.launch {
+                  saveToDataStore(context = context, accessToken = "", refreshToken = "")
+              }
+            }) {
                 Text(
                     text = "Log Out",
                     color = Color.White,

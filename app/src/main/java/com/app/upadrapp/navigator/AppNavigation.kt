@@ -21,9 +21,6 @@ fun AppNavigation() {
     val context = LocalContext.current
     val showSplash = remember { mutableStateOf(true) }
     val navController = rememberNavController()
-    val authViewModel:LoginUserViewModel = viewModel()
-    val loginData = authViewModel.loginData.observeAsState()
-    val data = loginData.value
     val accessToken = getAccessToken(context).collectAsState(initial = "")
     val isAuthenticated = remember {
         mutableStateOf(false)
@@ -36,10 +33,10 @@ fun AppNavigation() {
     if (showSplash.value) {
         SplashScreen()
     } else {
-        if(data is NetworkResponse.Success || accessToken?.value != ""){
+        if(accessToken.value != ""){
            DrawerNavigation(navController = navController)
         }else{
-            AuthNavigation(navController,{  isAuthenticated.value= false},authViewModel)
+            AuthNavigation(navController,{  isAuthenticated.value= false})
         }
     }
 }
