@@ -59,7 +59,6 @@ import com.app.upadrapp.viewmodel.appviewmodel.ProcedureApiViewModel
 
 @Composable
 fun Step1(increment:Int,onClick:()->Unit,navController: NavController) {
-    val data = listOf("#Procedures1","#Procedures2","#Procedures3","#Procedures4","#Procedures5","#Procedures6")
     var selectedProcedure = remember {
         mutableStateOf("")
     }
