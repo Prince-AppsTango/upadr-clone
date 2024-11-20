@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +28,9 @@ fun HomePage(navController: NavController,drawerState: DrawerState) {
        mutableIntStateOf(1)
    }
     val meApiViewModel:MeApiViewModel = viewModel()
+    val meDataObserver = meApiViewModel.meData.observeAsState()
+    val meData = meDataObserver.value
+    Log.d("meData","$meData")
     LaunchedEffect(key1 = Unit) {
         meApiViewModel.getMeData()
     }
