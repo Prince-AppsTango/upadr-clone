@@ -26,9 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContentProviderCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.app.upadrapp.R
@@ -57,6 +59,7 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit,viewModel:LoginU
     val loginData = viewModel.loginData.observeAsState()
     val data = loginData.value
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
     SafeArea {
         Column(
             modifier = Modifier
@@ -112,7 +115,7 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit,viewModel:LoginU
                                 emailAddress = email.value,
                                 password = password.value
                             )
-                            viewModel.getSignIn(data)
+                            viewModel.getSignIn(context,data)
                         })
                     }
                     Spacer(modifier = Modifier.height(25.dp))
