@@ -33,4 +33,8 @@ object RetrofitInstance {
     fun getMeData(context: Context):AppServices{
         return  getInstance(context).create(AppServices :: class.java)
     }
+
+    fun getAllProcedure(context: Context):AppServices{
+        return  getInstance(context).create(AppServices::class.java)
+    }
 }

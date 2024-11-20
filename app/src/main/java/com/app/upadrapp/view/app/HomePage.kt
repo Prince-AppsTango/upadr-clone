@@ -21,19 +21,13 @@ import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.view.app.steps.Step1
 import com.app.upadrapp.view.app.steps.Step2
 import com.app.upadrapp.viewmodel.appviewmodel.MeApiViewModel
+import com.app.upadrapp.viewmodel.appviewmodel.ProcedureApiViewModel
 
 @Composable
 fun HomePage(navController: NavController,drawerState: DrawerState) {
    val increment = remember {
        mutableIntStateOf(1)
    }
-    val meApiViewModel:MeApiViewModel = viewModel()
-    val meDataObserver = meApiViewModel.meData.observeAsState()
-    val meData = meDataObserver.value
-    Log.d("meData","$meData")
-    LaunchedEffect(key1 = Unit) {
-        meApiViewModel.getMeData()
-    }
     SafeArea {
         Column(
             modifier = Modifier
