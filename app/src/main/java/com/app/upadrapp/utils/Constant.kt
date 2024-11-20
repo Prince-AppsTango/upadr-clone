@@ -1,7 +1,7 @@
 package com.app.upadrapp.utils
 
 object Constant {
-    const val BASE_URL ="https://api.upadr.com/"
+    const val BASE_URL ="https://dev-api.upadr.com/"
     const val WELCOME_SCREEN = "WELCOME_SCREEN"
     const val LOGIN_SCREEN = "LOGIN_SCREEN"
     const val SIGNUP_SCREEN = "SIGNUP_SCREEN"
