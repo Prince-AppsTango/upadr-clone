@@ -2,6 +2,7 @@ package com.app.upadrapp.view.auth
 
 import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,7 +50,10 @@ import com.app.upadrapp.ui.theme.SubTitleColor
 import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.utils.SafeArea
+import com.app.upadrapp.utils.parseMessage
 import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 
 @Composable
 fun LoginScreen(navController: NavController,onClick:() -> Unit) {
@@ -66,7 +70,6 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
     val authViewModel:LoginUserViewModel = viewModel()
     val loginData = authViewModel.loginData.observeAsState()
     val data = loginData.value
-    Log.d("LoginData","$data")
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
@@ -159,6 +162,19 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
             }
         }
     }
+   // error and success message handler
+    when(data){
+        is NetworkResponse.Error ->{
+            Toast.makeText(context, parseMessage(data.message),Toast.LENGTH_LONG).show()
+        }
+        NetworkResponse.Loading -> Box(){}
+        is NetworkResponse.Success -> {
+            data.let {
+                Toast.makeText(context, it.data.message,Toast.LENGTH_LONG).show()
+            }
+        }
+        null -> Box(){}
+    }
 }
 
 //reference from google
@@ -169,3 +185,4 @@ fun isValidPassword(password: String): Boolean {
     val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
     return passwordRegex.matches(password)
 }
+
