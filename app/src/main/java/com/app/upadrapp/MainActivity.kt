@@ -1,5 +1,6 @@
 package com.app.upadrapp
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,6 +17,7 @@ import com.app.upadrapp.utils.SetStatusBarColor
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appContext = applicationContext
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             UpadrTheme {
@@ -27,6 +29,14 @@ class MainActivity : ComponentActivity() {
                     AppNavigation()
                 }
             }
+        }
+    }
+    companion object {
+        // Store application context globally
+        private var appContext: Context? = null
+
+        fun getAppContext(): Context {
+            return appContext!!
         }
     }
 }

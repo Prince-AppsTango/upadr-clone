@@ -62,6 +62,14 @@ dependencies {
     testImplementation(libs.junit)
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.8.4")
+    //Api Call
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    //Json converter
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    //Observer
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
+    //Data store
+    implementation ("androidx.datastore:datastore-preferences:1.1.1")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

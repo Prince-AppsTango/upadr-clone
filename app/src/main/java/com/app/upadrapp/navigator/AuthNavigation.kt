@@ -13,6 +13,7 @@ import com.app.upadrapp.view.auth.LoginScreen
 import com.app.upadrapp.view.auth.SignUpScreen
 import com.app.upadrapp.view.auth.VerifyOtpScreen
 import com.app.upadrapp.view.auth.WelcomeScreen
+import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 
 @Composable
 fun AuthNavigation(navController: NavHostController,onClick:()->Unit) {
@@ -22,9 +23,7 @@ fun AuthNavigation(navController: NavHostController,onClick:()->Unit) {
             WelcomeScreen(navController)
         }
         composable(route = Constant.LOGIN_SCREEN) {
-            LoginScreen(navController){
-                onClick()
-            }
+            LoginScreen(navController,{ onClick()})
         }
         composable(route = Constant.SIGNUP_SCREEN) {
             SignUpScreen(navController)
