@@ -15,12 +15,18 @@ fun DatePickerModal(
     onDismiss: () -> Unit
 ) {
     val datePickerState = rememberDatePickerState()
+    val currentTimeMillis = System.currentTimeMillis()
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
-                onDateSelected(datePickerState.selectedDateMillis)
+                val selectedDate = datePickerState.selectedDateMillis
+                if (selectedDate != null && selectedDate >= currentTimeMillis) {
+                    onDateSelected(selectedDate)
+                } else {
+                    onDateSelected(null)
+                }
                 onDismiss()
             }) {
                 Text("OK")
@@ -32,6 +38,12 @@ fun DatePickerModal(
             }
         }
     ) {
-        DatePicker(state = datePickerState)
+        DatePicker(
+            state = datePickerState,
+            showModeToggle = false,
+            dateValidator = { timestamp ->
+                timestamp >= currentTimeMillis
+            }
+        )
     }
 }
