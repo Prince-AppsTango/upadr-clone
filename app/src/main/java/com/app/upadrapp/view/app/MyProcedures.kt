@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.app
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +45,7 @@ import com.app.upadrapp.viewmodel.appviewmodel.UserProcedureViewModel
 
 @Composable
 fun MyProcedures(drawerState: DrawerState, navController: NavController) {
+    val context = LocalContext.current
     val userProcedureViewModel: UserProcedureViewModel = viewModel()
     val getUserProcedure = userProcedureViewModel.allUserProcedure.observeAsState()
     LaunchedEffect(key1 = Unit) {
@@ -106,10 +109,18 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                         }
                         if ( result.data.upcomingUserProcedures.isNotEmpty() || result.data.completedUserProcedures.isNotEmpty()){
                             Column (modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
-                                CustomButton(text = "FAQ’s and Tips", width = 300) {}
+                                CustomButton(text = "FAQ’s and Tips", width = 300) {
+
+                                }
                                 Spacer(modifier = Modifier.height(10.dp))
                                 OutlinedButton(
-                                    onClick = { },
+                                    onClick = {
+                                              if(result.data.upcomingUserProcedures.isNotEmpty()){
+                                                  Toast.makeText(context,Constant.PROCEDURE_EXISTS,Toast.LENGTH_LONG).show()
+                                              }else{
+
+                                              }
+                                    },
                                     border = BorderStroke(2.dp, MediumTurquoise),
                                     modifier = Modifier.width(300.dp).height(50.dp)
                                 ) {
