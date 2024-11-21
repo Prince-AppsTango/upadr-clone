@@ -1,13 +1,11 @@
 package com.app.upadrapp.view.app
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -25,8 +23,7 @@ import com.app.upadrapp.utils.parseMessage
 import com.app.upadrapp.view.app.steps.Step1
 import com.app.upadrapp.view.app.steps.Step2
 import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
-import com.app.upadrapp.viewmodel.appviewmodel.MeApiViewModel
-import com.app.upadrapp.viewmodel.appviewmodel.ProcedureApiViewModel
+
 
 @Composable
 fun HomePage(navController: NavController, drawerState: DrawerState) {
@@ -40,28 +37,24 @@ fun HomePage(navController: NavController, drawerState: DrawerState) {
     val createProcedureApiViewModel: CreateProcedureApiViewModel = viewModel()
     val getProcedureData = createProcedureApiViewModel.getCreateProcedureData.observeAsState()
     val toastShown = remember { mutableStateOf(false) }
-
+     // when i create procedure then i checked response
     when (val result = getProcedureData.value) {
         is NetworkResponse.Error -> {
-            if (!toastShown.value) {
                 Toast.makeText(
                     context,
                     parseMessage(result.message) ?:result.message,
                     Toast.LENGTH_LONG
                 ).show()
-                toastShown.value = true
-            }
         }
 
         NetworkResponse.Loading -> {}
         is NetworkResponse.Success -> {
             if (!toastShown.value) {
                 Toast.makeText(context, result.data.message, Toast.LENGTH_LONG).show()
-                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                navController.navigate(Constant.MY_PROCEDURE_SCREEN)
                 toastShown.value = true
             }
         }
-
         null -> {}
     }
 
