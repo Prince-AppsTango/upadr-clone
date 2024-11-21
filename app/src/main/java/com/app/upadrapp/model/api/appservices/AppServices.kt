@@ -24,4 +24,8 @@ interface AppServices {
     @POST(EndPoints.CREATE_USER_PROCEDURE)
     suspend fun createUserProcedure(@Body createParameterProcedureModel: CreateParameterProcedureModel):Response<CreateProcedureResponseModel>
 
+
+    @GET(EndPoints.GET_USER_PROCEDURE)
+    suspend fun getUserProcedure(): Response<ProcedureModel>
+
 }
