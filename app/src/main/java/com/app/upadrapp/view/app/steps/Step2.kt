@@ -62,6 +62,7 @@ import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
 @Composable
 fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureId: String) {
     val context = LocalContext.current
+    val apiCallTriggered = remember { mutableStateOf(false) }
     val isDatePickerOpen = remember {
         mutableStateOf(false)
     }
@@ -171,6 +172,7 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
                         }
                         if (data != null) {
                             createProcedureApiViewModel.createUserProcedure(data)
+                            apiCallTriggered.value=true
                         }
                     } else {
                         Toast.makeText(
@@ -219,16 +221,17 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
             })
         }
     }
-    when (val result = getProcedureData.value) {
-        is NetworkResponse.Error -> {
-            Toast.makeText(context, parseMessage(result.message), Toast.LENGTH_LONG).show()
+    if(apiCallTriggered.value){
+        when (val result = getProcedureData.value) {
+            is NetworkResponse.Error -> {
+                Toast.makeText(context, parseMessage(result.message), Toast.LENGTH_LONG).show()
+            }
+            NetworkResponse.Loading -> Box {}
+            is NetworkResponse.Success -> {
+                Toast.makeText(context, parseMessage(result.data.message), Toast.LENGTH_LONG).show()
+                onClick()
+            }
+            null -> Box {}
         }
-        NetworkResponse.Loading -> Box {}
-        is NetworkResponse.Success -> {
-            Toast.makeText(context, parseMessage(result.data.message), Toast.LENGTH_LONG).show()
-            onClick()
-        }
-        null -> Box {}
     }
-
 }
