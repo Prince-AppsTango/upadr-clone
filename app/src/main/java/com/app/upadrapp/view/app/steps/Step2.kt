@@ -45,12 +45,13 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.ui.theme.MediumTurquoise
+import com.app.upadrapp.utils.combineDateTimeToISO
 import com.app.upadrapp.utils.formatDateFromTimestamp
 import com.app.upadrapp.utils.formatTimeFromTimePickerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit,selectedProcedureId:String) {
+fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureId: String) {
 
     val isDatePickerOpen = remember {
         mutableStateOf(false)
@@ -61,9 +62,12 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit,selectedProcedureId:Str
     val selectedDate = remember {
         mutableStateOf("")
     }
+    Log.d("selectedDate", "$selectedDate") // 11/22/2024
     val selectedTime = remember {
         mutableStateOf("")
     }
+
+
     Column {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
             Image(
@@ -97,7 +101,10 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit,selectedProcedureId:Str
                 .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = if (selectedDate.value != "") selectedDate.value else "mm/dd/yyyy", color = BorderColor)
+                Text(
+                    text = if (selectedDate.value != "") selectedDate.value else "mm/dd/yyyy",
+                    color = BorderColor
+                )
                 Icon(
                     Icons.Filled.DateRange,
                     contentDescription = "DateRange",
@@ -117,7 +124,10 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit,selectedProcedureId:Str
                 .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = if (selectedTime.value != "") selectedTime.value else "HH:MM", color = BorderColor)
+                Text(
+                    text = if (selectedTime.value != "") selectedTime.value else "HH:MM",
+                    color = BorderColor
+                )
                 Icon(
                     Icons.Filled.DateRange,
                     contentDescription = "DateRange",
@@ -132,11 +142,21 @@ fun Step2(onClick: () -> Unit,onBackButtonClick:()->Unit,selectedProcedureId:Str
                 .fillMaxSize()
                 .padding(0.dp, 0.dp, 0.dp, 30.dp)
         ) {
-            OutlinedButton(onClick = { onBackButtonClick() }, border = BorderStroke(2.dp, MediumTurquoise) ) {
+            OutlinedButton(
+                onClick = { onBackButtonClick() },
+                border = BorderStroke(2.dp, MediumTurquoise)
+            ) {
                 Text(text = "Back", color = MediumTurquoise, fontWeight = FontWeight.W600)
             }
             ExtendedFloatingActionButton(
-                onClick = { onClick() },
+                onClick = {
+                    if (selectedDate.value.isNotEmpty() && selectedTime.value.isNotEmpty()){
+                        val combinedDateTime = combineDateTimeToISO(selectedDate.value,selectedTime.value)
+                        Log.d("combinedDateTime","$combinedDateTime")
+                        onClick()
+                    }
+
+                },
                 modifier = Modifier
                     .width(160.dp)
                     .height(45.dp),
