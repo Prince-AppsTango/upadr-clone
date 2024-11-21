@@ -110,7 +110,7 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                         if ( result.data.upcomingUserProcedures.isNotEmpty() || result.data.completedUserProcedures.isNotEmpty()){
                             Column (modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
                                 CustomButton(text = "FAQ’s and Tips", width = 300) {
-
+                                     navController.navigate(Constant.FAQ_SCREEN)
                                 }
                                 Spacer(modifier = Modifier.height(10.dp))
                                 OutlinedButton(
