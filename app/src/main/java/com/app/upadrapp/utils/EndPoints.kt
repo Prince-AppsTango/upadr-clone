@@ -5,4 +5,5 @@ object EndPoints {
     const val ME_API ="auth/me"
     const val GET_ALL_PROCEDURE = "procedure/get-all-procedures"
     const val CREATE_USER_PROCEDURE = "/user-procedure/create-user-procedure"
+
 }

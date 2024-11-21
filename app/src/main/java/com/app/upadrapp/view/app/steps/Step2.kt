@@ -60,7 +60,7 @@ import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureId: String) {
+fun Step2(onBackButtonClick: () -> Unit, selectedProcedureId: String,createProcedureApiViewModel: CreateProcedureApiViewModel) {
     val context = LocalContext.current
     val apiCallTriggered = remember { mutableStateOf(false) }
     val isDatePickerOpen = remember {
@@ -76,8 +76,6 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
     val selectedTime = remember {
         mutableStateOf("")
     }
-    val createProcedureApiViewModel: CreateProcedureApiViewModel = viewModel()
-    val getProcedureData = createProcedureApiViewModel.getCreateProcedureData.observeAsState()
 
     Column {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
@@ -219,19 +217,6 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
                 selectedTime.value = formattedTime
                 isTimePickerOpen.value = false
             })
-        }
-    }
-    if(apiCallTriggered.value){
-        when (val result = getProcedureData.value) {
-            is NetworkResponse.Error -> {
-                Toast.makeText(context, parseMessage(result.message), Toast.LENGTH_LONG).show()
-            }
-            NetworkResponse.Loading -> Box {}
-            is NetworkResponse.Success -> {
-                Toast.makeText(context, parseMessage(result.data.message), Toast.LENGTH_LONG).show()
-                onClick()
-            }
-            null -> Box {}
         }
     }
 }
