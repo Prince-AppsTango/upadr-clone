@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +24,7 @@ import com.app.upadrapp.utils.parseMessage
 import com.app.upadrapp.view.app.steps.Step1
 import com.app.upadrapp.view.app.steps.Step2
 import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
+import com.app.upadrapp.viewmodel.appviewmodel.UserProcedureViewModel
 
 
 @Composable
@@ -34,17 +36,21 @@ fun HomePage(navController: NavController, drawerState: DrawerState) {
         mutableStateOf("")
     }
     val context = LocalContext.current
+    // CreateProcedureApiViewModel
     val createProcedureApiViewModel: CreateProcedureApiViewModel = viewModel()
     val getProcedureData = createProcedureApiViewModel.getCreateProcedureData.observeAsState()
     val toastShown = remember { mutableStateOf(false) }
-     // when i create procedure then i checked response
+    // UserProcedureViewModel
+    val userProcedureViewModel: UserProcedureViewModel = viewModel()
+    val getUserProcedure = userProcedureViewModel.allUserProcedure.observeAsState()
+    // when i create procedure then i checked response
     when (val result = getProcedureData.value) {
         is NetworkResponse.Error -> {
-                Toast.makeText(
-                    context,
-                    parseMessage(result.message) ?:result.message,
-                    Toast.LENGTH_LONG
-                ).show()
+            Toast.makeText(
+                context,
+                parseMessage(result.message) ?: result.message,
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         NetworkResponse.Loading -> {}
@@ -55,28 +61,50 @@ fun HomePage(navController: NavController, drawerState: DrawerState) {
                 toastShown.value = true
             }
         }
+
         null -> {}
+    }
+    LaunchedEffect(getUserProcedure.value) {
+        when (val result = getUserProcedure.value) {
+            is NetworkResponse.Error -> {}
+            NetworkResponse.Loading -> {}
+            is NetworkResponse.Success -> {
+                if (result.data.completedUserProcedures.isNotEmpty() || result.data.upcomingUserProcedures.isNotEmpty()) {
+                    increment.value = 3
+                }
+
+            }
+            null -> {}
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        userProcedureViewModel.getAllUserProcedure()
     }
 
     SafeArea {
         Column(
             modifier = Modifier
                 .background(LightCyan)
-                .fillMaxSize(1f)
+                .fillMaxSize()
         ) {
-            TopDrawerNavigation(drawerState = drawerState, navController = navController)
-            if (increment.value == 1) {
-                Step1(increment = increment.value, onClick = {
+            if (increment.value != 3) {
+                TopDrawerNavigation(drawerState = drawerState, navController = navController)
+            }
+            when (increment.value) {
+                1 -> Step1(increment = increment.value, onClick = {
                     selectedProcedureId.value = it
                     increment.value += 1
                 }, navController)
-            } else {
-                Step2(
+
+                2 -> Step2(
                     onBackButtonClick = { increment.value -= 1 },
                     selectedProcedureId = selectedProcedureId.value,
-                    createProcedureApiViewModel=createProcedureApiViewModel,
+                    createProcedureApiViewModel = createProcedureApiViewModel,
                     context = context
                 )
+
+                else -> MyProcedures(drawerState = drawerState, navController = navController)
             }
         }
     }

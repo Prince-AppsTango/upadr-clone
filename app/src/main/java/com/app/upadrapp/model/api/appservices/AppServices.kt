@@ -4,6 +4,7 @@ import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateParame
 import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateProcedureResponseModel
 import com.app.upadrapp.model.appmodel.medatamodel.MeDataReponseModel
 import com.app.upadrapp.model.appmodel.proceduremodel.ProcedureModel
+import com.app.upadrapp.model.appmodel.userproceduremodel.UserProcedureModel
 import com.app.upadrapp.utils.EndPoints
 import retrofit2.Response
 import retrofit2.http.Body
@@ -26,6 +27,6 @@ interface AppServices {
 
 
     @GET(EndPoints.GET_USER_PROCEDURE)
-    suspend fun getUserProcedure(): Response<ProcedureModel>
+    suspend fun getUserProcedure(): Response<UserProcedureModel>
 
 }
