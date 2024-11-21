@@ -1,6 +1,7 @@
 package com.app.upadrapp.view.app.steps
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,16 +29,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.app.upadrapp.R
+import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateParameterProcedureModel
 import com.app.upadrapp.shared.DatePickerModal
 import com.app.upadrapp.shared.DialTimePicker
 import com.app.upadrapp.shared.Subtitle
@@ -45,14 +51,17 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.ui.theme.MediumTurquoise
+import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.utils.combineDateTimeToISO
 import com.app.upadrapp.utils.formatDateFromTimestamp
 import com.app.upadrapp.utils.formatTimeFromTimePickerState
+import com.app.upadrapp.utils.parseMessage
+import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureId: String) {
-
+     val context = LocalContext.current
     val isDatePickerOpen = remember {
         mutableStateOf(false)
     }
@@ -66,7 +75,8 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
     val selectedTime = remember {
         mutableStateOf("")
     }
-
+    val createProcedureApiViewModel:CreateProcedureApiViewModel = viewModel()
+    val getProcedureData = createProcedureApiViewModel.getCreateProcedureData.observeAsState()
 
     Column {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
@@ -152,8 +162,15 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
                 onClick = {
                     if (selectedDate.value.isNotEmpty() && selectedTime.value.isNotEmpty()){
                         val combinedDateTime = combineDateTimeToISO(selectedDate.value,selectedTime.value)
-                        Log.d("combinedDateTime","$combinedDateTime")
-                        onClick()
+                        val data = combinedDateTime?.let {
+                            CreateParameterProcedureModel(
+                                dateTime = it,
+                                procedureId = selectedProcedureId
+                            )
+                        }
+                        if (data != null) {
+                            createProcedureApiViewModel.createUserProcedure(data)
+                        }
                     }
 
                 },
@@ -196,4 +213,16 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
             })
         }
     }
+    when(val result = getProcedureData.value){
+        is NetworkResponse.Error -> {
+            Toast.makeText(context, parseMessage(result.message), Toast.LENGTH_LONG).show()
+        }
+        NetworkResponse.Loading -> Box {}
+        is NetworkResponse.Success -> {
+            Toast.makeText(context, parseMessage(result.data.message), Toast.LENGTH_LONG).show()
+            onClick()
+        }
+        null ->  Box {}
+    }
+
 }

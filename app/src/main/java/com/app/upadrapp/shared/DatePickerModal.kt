@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -15,14 +16,21 @@ fun DatePickerModal(
     onDismiss: () -> Unit
 ) {
     val datePickerState = rememberDatePickerState()
-    val currentTimeMillis = System.currentTimeMillis()
+
+    //copy from google
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.HOUR_OF_DAY, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
+    val currentDayMillis = calendar.timeInMillis
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
                 val selectedDate = datePickerState.selectedDateMillis
-                if (selectedDate != null && selectedDate >= currentTimeMillis) {
+                if (selectedDate != null && selectedDate >= currentDayMillis) {
                     onDateSelected(selectedDate)
                 } else {
                     onDateSelected(null)
@@ -42,7 +50,7 @@ fun DatePickerModal(
             state = datePickerState,
             showModeToggle = false,
             dateValidator = { timestamp ->
-                timestamp >= currentTimeMillis
+                timestamp >= currentDayMillis
             }
         )
     }

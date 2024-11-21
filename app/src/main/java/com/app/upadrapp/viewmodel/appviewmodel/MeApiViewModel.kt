@@ -14,7 +14,7 @@ class MeApiViewModel :ViewModel() {
     private val appApiRepository = AppApiRepository()
     private val _meData = MutableLiveData<NetworkResponse<MeDataReponseModel>>()
     val meData : LiveData<NetworkResponse<MeDataReponseModel>> = _meData;
-    suspend fun getMeData(){
+     fun getMeData(){
         _meData.value = NetworkResponse.Loading
         viewModelScope.launch {
             try {

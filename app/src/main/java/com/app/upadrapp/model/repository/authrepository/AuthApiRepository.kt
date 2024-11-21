@@ -8,9 +8,9 @@ import retrofit2.Response
 
 class AuthApiRepository {
     val context = MainActivity.getAppContext()
-    private  val getRetroFitInstance = RetrofitInstance.getSignIn(context)
+    private val authServices = RetrofitInstance.getAuthServices(context)
     suspend fun getSignIn(loginParameterModel: LoginParameterModel):Response<LoginResponseModel>{
-          return  getRetroFitInstance.getSignIn(loginParameterModel)
+          return  authServices.getSignIn(loginParameterModel)
     }
 
 }
