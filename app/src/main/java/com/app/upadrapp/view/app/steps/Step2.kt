@@ -61,7 +61,7 @@ import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureId: String) {
-     val context = LocalContext.current
+    val context = LocalContext.current
     val isDatePickerOpen = remember {
         mutableStateOf(false)
     }
@@ -75,7 +75,7 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
     val selectedTime = remember {
         mutableStateOf("")
     }
-    val createProcedureApiViewModel:CreateProcedureApiViewModel = viewModel()
+    val createProcedureApiViewModel: CreateProcedureApiViewModel = viewModel()
     val getProcedureData = createProcedureApiViewModel.getCreateProcedureData.observeAsState()
 
     Column {
@@ -160,8 +160,9 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
             }
             ExtendedFloatingActionButton(
                 onClick = {
-                    if (selectedDate.value.isNotEmpty() && selectedTime.value.isNotEmpty()){
-                        val combinedDateTime = combineDateTimeToISO(selectedDate.value,selectedTime.value)
+                    if (selectedDate.value.isNotEmpty() && selectedTime.value.isNotEmpty()) {
+                        val combinedDateTime =
+                            combineDateTimeToISO(selectedDate.value, selectedTime.value)
                         val data = combinedDateTime?.let {
                             CreateParameterProcedureModel(
                                 dateTime = it,
@@ -171,8 +172,13 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
                         if (data != null) {
                             createProcedureApiViewModel.createUserProcedure(data)
                         }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Please select both date and time",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-
                 },
                 modifier = Modifier
                     .width(160.dp)
@@ -213,7 +219,7 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
             })
         }
     }
-    when(val result = getProcedureData.value){
+    when (val result = getProcedureData.value) {
         is NetworkResponse.Error -> {
             Toast.makeText(context, parseMessage(result.message), Toast.LENGTH_LONG).show()
         }
@@ -222,7 +228,7 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
             Toast.makeText(context, parseMessage(result.data.message), Toast.LENGTH_LONG).show()
             onClick()
         }
-        null ->  Box {}
+        null -> Box {}
     }
 
 }
