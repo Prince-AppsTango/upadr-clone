@@ -29,11 +29,9 @@ class CreateProcedureApiViewModel:ViewModel() {
                      }
                  } else {
                      val errorMessage = response.errorBody()?.string() ?: "An unknown error occurred"
-                     Log.e("ApiCallError", errorMessage) // Log the error body
                      _getCreateProcedureData.value = NetworkResponse.Error(errorMessage)
                  }
              } catch (e: Exception) {
-                 Log.e("ApiCallException", e.message.toString()) // Log the exception if one occurs
                  _getCreateProcedureData.value = NetworkResponse.Error("Failed to load data")
              }
          }

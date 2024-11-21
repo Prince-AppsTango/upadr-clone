@@ -30,34 +30,39 @@ import com.app.upadrapp.viewmodel.appviewmodel.ProcedureApiViewModel
 
 @Composable
 fun HomePage(navController: NavController, drawerState: DrawerState) {
-    val context = LocalContext.current
-    val createProcedureApiViewModel: CreateProcedureApiViewModel = viewModel()
-    val getProcedureData = createProcedureApiViewModel.getCreateProcedureData.observeAsState()
-    val toastShown = remember { mutableStateOf(false) }
     val increment = remember {
         mutableIntStateOf(1)
     }
     var selectedProcedureId = remember {
         mutableStateOf("")
     }
-    getProcedureData.value?.let { result ->
-        when (result) {
-            is NetworkResponse.Error -> {
-                if (!toastShown.value) {
-                    Toast.makeText(context, parseMessage(result.message), Toast.LENGTH_LONG).show()
-                    toastShown.value = true // Set to true to avoid showing again
-                }
-            }
-            NetworkResponse.Loading -> {
-            }
-            is NetworkResponse.Success -> {
-                if (!toastShown.value) {
-                    Toast.makeText(context, result.data.message, Toast.LENGTH_LONG).show()
-                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
-                    toastShown.value = true
-                }
+    val context = LocalContext.current
+    val createProcedureApiViewModel: CreateProcedureApiViewModel = viewModel()
+    val getProcedureData = createProcedureApiViewModel.getCreateProcedureData.observeAsState()
+    val toastShown = remember { mutableStateOf(false) }
+
+    when (val result = getProcedureData.value) {
+        is NetworkResponse.Error -> {
+            if (!toastShown.value) {
+                Toast.makeText(
+                    context,
+                    parseMessage(result.message) ?:result.message,
+                    Toast.LENGTH_LONG
+                ).show()
+                toastShown.value = true
             }
         }
+
+        NetworkResponse.Loading -> {}
+        is NetworkResponse.Success -> {
+            if (!toastShown.value) {
+                Toast.makeText(context, result.data.message, Toast.LENGTH_LONG).show()
+                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                toastShown.value = true
+            }
+        }
+
+        null -> {}
     }
 
     SafeArea {
@@ -76,7 +81,8 @@ fun HomePage(navController: NavController, drawerState: DrawerState) {
                 Step2(
                     onBackButtonClick = { increment.value -= 1 },
                     selectedProcedureId = selectedProcedureId.value,
-                    createProcedureApiViewModel = createProcedureApiViewModel
+                    createProcedureApiViewModel=createProcedureApiViewModel,
+                    context = context
                 )
             }
         }

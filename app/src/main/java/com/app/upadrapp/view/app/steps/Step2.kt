@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.app.steps
 
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -42,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.app.upadrapp.R
 import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateParameterProcedureModel
 import com.app.upadrapp.shared.DatePickerModal
@@ -51,6 +53,7 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.ui.theme.MediumTurquoise
+import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.utils.combineDateTimeToISO
 import com.app.upadrapp.utils.formatDateFromTimestamp
@@ -60,9 +63,13 @@ import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Step2(onBackButtonClick: () -> Unit, selectedProcedureId: String,createProcedureApiViewModel: CreateProcedureApiViewModel) {
-    val context = LocalContext.current
-    val apiCallTriggered = remember { mutableStateOf(false) }
+fun Step2(
+    onBackButtonClick: () -> Unit,
+    selectedProcedureId: String,
+    createProcedureApiViewModel: CreateProcedureApiViewModel,
+    context:Context
+) {
+
     val isDatePickerOpen = remember {
         mutableStateOf(false)
     }
@@ -72,10 +79,13 @@ fun Step2(onBackButtonClick: () -> Unit, selectedProcedureId: String,createProce
     val selectedDate = remember {
         mutableStateOf("")
     }
-    Log.d("selectedDate", "$selectedDate") // 11/22/2024
     val selectedTime = remember {
         mutableStateOf("")
     }
+    val apiCallTriggered = remember { mutableStateOf(false) }
+
+
+
 
     Column {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
@@ -170,7 +180,7 @@ fun Step2(onBackButtonClick: () -> Unit, selectedProcedureId: String,createProce
                         }
                         if (data != null) {
                             createProcedureApiViewModel.createUserProcedure(data)
-                            apiCallTriggered.value=true
+                            apiCallTriggered.value = true
                         }
                     } else {
                         Toast.makeText(
@@ -218,5 +228,6 @@ fun Step2(onBackButtonClick: () -> Unit, selectedProcedureId: String,createProce
                 isTimePickerOpen.value = false
             })
         }
+
     }
 }
