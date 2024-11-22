@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.app
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -87,7 +88,7 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                                 items(result.data.upcomingUserProcedures){
                                     Spacer(modifier = Modifier.height(10.dp))
                                     ButtonWithIcon(text = it.procedure.title, fontSize = 20) {
-                                        navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                                        navController.navigate("${Constant.PREP_PROCESS_OVERVIEW_SCREEN}/${it.userProcedureId}")
                                     }
                                     Spacer(modifier = Modifier.height(5.dp))
                                 }
@@ -101,7 +102,7 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                                 items(result.data.completedUserProcedures){
                                     Spacer(modifier = Modifier.height(10.dp))
                                     ButtonWithIcon(text = it.procedure.title, fontSize = 20) {
-                                        navController.navigate(Constant.PREP_PROCESS_OVERVIEW_SCREEN)
+                                        navController.navigate("${Constant.PREP_PROCESS_OVERVIEW_SCREEN}/${it.userProcedureId}")
                                     }
                                     Spacer(modifier = Modifier.height(5.dp))
                                 }

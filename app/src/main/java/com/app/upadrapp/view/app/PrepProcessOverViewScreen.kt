@@ -1,5 +1,6 @@
 package com.app.upadrapp.view.app
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -45,7 +46,8 @@ import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.utils.prepSteps
 
 @Composable
-fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerState) {
+fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerState,userProcedureId:String) {
+    Log.d("userProcedureId","$userProcedureId")
     val scrollState =  rememberScrollState()
     SafeArea {
         Column {
