@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.app.upadrapp.utils.Constant
+import com.app.upadrapp.view.app.EditYourProcedure
 import com.app.upadrapp.view.app.FaqScreen
 import com.app.upadrapp.view.app.HomePage
 import com.app.upadrapp.view.app.MyProcedures
@@ -61,6 +62,9 @@ fun MainNavigation(navController: NavHostController, drawerState: DrawerState) {
             route = Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN
         ) {
             PrepProcessOverviewDetailsScreen(drawerState, navController)
+        }
+        composable(route=Constant.EDIT_PREP_PROCESS_OVERVIEW_SCREEN) {
+            EditYourProcedure(navController = navController)
         }
     }
 }

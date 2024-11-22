@@ -123,7 +123,9 @@ fun PrepProcessOverviewScreen(
                             DropDownMenuForPrep(mDisplayMenu = mDisplayMenu.value, onCancel = {
                                 isCancelBoxOpen.value = true
                                 mDisplayMenu.value = false
-                            }, onEdit = {}, onDismissRequest = { mDisplayMenu.value = false })
+                            }, onEdit = {
+                                        navController.navigate(Constant.EDIT_PREP_PROCESS_OVERVIEW_SCREEN)
+                            }, onDismissRequest = { mDisplayMenu.value = false })
                         }
                     }
                     Subtitle(
@@ -188,7 +190,7 @@ fun PrepProcessOverviewScreen(
                                             model = prepStep.procedureStepImageUrl,
                                             contentDescription = "${index + 1}",
                                             modifier = Modifier.fillMaxSize(),
-                                            contentScale = ContentScale.Crop
+                                            contentScale = ContentScale.Crop,
                                         )
                                     }
                                 }

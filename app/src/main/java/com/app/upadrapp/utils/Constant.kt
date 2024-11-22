@@ -18,5 +18,5 @@ object Constant {
     const val FAQ_SCREEN = "FAQ_SCREEN"
     const val PREP_PROCESS_OVERVIEW_DETAILS_SCREEN ="PREP_PROCESS_OVERVIEW_DETAILS_SCREEN"
     const val PROCEDURE_EXISTS = "Please complete procedure or cancel current procedure"
-
+    const val EDIT_PREP_PROCESS_OVERVIEW_SCREEN ="EDIT_PREP_PROCESS_OVERVIEW_SCREEN"
 }
