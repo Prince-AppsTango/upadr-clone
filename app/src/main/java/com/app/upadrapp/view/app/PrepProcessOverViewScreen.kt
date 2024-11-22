@@ -30,6 +30,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +46,7 @@ import coil.compose.AsyncImage
 
 import com.app.upadrapp.shared.ConvertToDateCount
 import com.app.upadrapp.shared.CustomButton
+import com.app.upadrapp.shared.DropDownMenuForPrep
 import com.app.upadrapp.shared.Loader
 import com.app.upadrapp.shared.NoDataFound
 import com.app.upadrapp.shared.Subtitle
@@ -61,6 +64,9 @@ import java.util.concurrent.TimeUnit
 @Composable
 fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerState,userProcedureId:String) {
     val scrollState =  rememberScrollState()
+    val mDisplayMenu = remember {
+        mutableStateOf(false)
+    }
     val procedureStepsViewModel:ProcedureStepsViewModel = viewModel()
     val getProcedureStep = procedureStepsViewModel.getProcedureSteps.observeAsState()
     LaunchedEffect(key1 = userProcedureId) {
@@ -90,12 +96,19 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                             )
                         }
                         IconButton(
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                      mDisplayMenu.value=true
+                            },
                             modifier = Modifier
                                 .size(60.dp)
                         ) {
                             Icon(Icons.Filled.MoreVert, contentDescription = "MoreVert", tint = Color.Gray)
                         }
+                       Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomEnd){
+                           DropDownMenuForPrep(mDisplayMenu = mDisplayMenu.value) {
+                               mDisplayMenu.value=false
+                           }
+                       }
                     }
                     Subtitle(
                         text = "But don’t worry! We will send you notification when these things need to get done so you don’t have to remember it all. ",
