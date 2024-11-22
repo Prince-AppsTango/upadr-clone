@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -104,7 +105,7 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                         NoDataFound()
                     }
                     NetworkResponse.Loading -> {
-                        Loader()
+                            Loader()
                     }
                     is NetworkResponse.Success -> {
                         result.data.userProcedures.procedure.steps.forEachIndexed{index, prepStep ->
@@ -139,7 +140,11 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                             .offset(y = 30.dp, x = 20.dp)
                                             .clip(RoundedCornerShape(100.dp))
                                             .background(Color.Gray)
-                                            .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
+                                            .border(
+                                                2.dp,
+                                                Color.Gray,
+                                                MaterialTheme.shapes.extraLarge
+                                            )
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(30.dp))
@@ -152,7 +157,11 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                             .offset(y = 30.dp, x = (-20).dp)
                                             .clip(RoundedCornerShape(100.dp))
                                             .background(Color.Gray)
-                                            .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
+                                            .border(
+                                                2.dp,
+                                                Color.Gray,
+                                                MaterialTheme.shapes.extraLarge
+                                            )
                                     )
                                     Column(
                                         modifier = Modifier
@@ -185,17 +194,18 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                             }
                             Spacer(modifier = Modifier.height(30.dp))
                         }
+                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                            CustomButton(text = "FAQ’s and Tips", width =300 ) {
+                                navController.navigate(Constant.TIPS_SCREEN)
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(40.dp))
                     }
                     null -> {
                         NoDataFound()
                     }
                 }
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    CustomButton(text = "FAQ’s and Tips", width =300 ) {
-                        navController.navigate(Constant.TIPS_SCREEN)
-                    }
-                }
-                Spacer(modifier = Modifier.height(40.dp))
+
             }
         }
 
