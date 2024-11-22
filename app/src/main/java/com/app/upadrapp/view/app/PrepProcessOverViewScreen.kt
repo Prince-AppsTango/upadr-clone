@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.shared.Subtitle
@@ -44,11 +46,15 @@ import com.app.upadrapp.ui.theme.MediumTurquoise
 import com.app.upadrapp.utils.Constant
 import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.utils.prepSteps
+import com.app.upadrapp.viewmodel.appviewmodel.ProcedureStepsViewModel
 
 @Composable
 fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerState,userProcedureId:String) {
-    Log.d("userProcedureId","$userProcedureId")
     val scrollState =  rememberScrollState()
+    val procedureStepsViewModel:ProcedureStepsViewModel = viewModel()
+    LaunchedEffect(key1 = userProcedureId) {
+        procedureStepsViewModel.getUserProcedureSteps(userProcedureId)
+    }
     SafeArea {
         Column {
             TopDrawerNavigation(elevation = 8, drawerState = drawerState, navController)

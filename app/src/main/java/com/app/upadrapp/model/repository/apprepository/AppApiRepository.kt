@@ -1,5 +1,6 @@
 package com.app.upadrapp.model.repository.apprepository
 
+import android.util.Log
 import com.app.upadrapp.MainActivity
 import com.app.upadrapp.model.api.RetrofitInstance
 import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateParameterProcedureModel

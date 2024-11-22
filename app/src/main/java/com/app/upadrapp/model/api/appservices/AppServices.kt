@@ -33,6 +33,6 @@ interface AppServices {
 
     //Get procedure steps
     @GET(EndPoints.GET_USER_PROCEDURE_STEPS)
-    suspend fun getUserProcedureSteps(@Path("id") userProcedureId:String ):Response<ProcedureStepsModel>
+    suspend fun getUserProcedureSteps(@Path("userProcedureId") userProcedureId:String ):Response<ProcedureStepsModel>
 
 }
