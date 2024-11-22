@@ -1,7 +1,10 @@
 package com.app.upadrapp.view.app
 
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import android.Manifest
 import com.app.upadrapp.shared.ButtonWithIcon
 import com.app.upadrapp.shared.CustomButton
 import com.app.upadrapp.shared.Loader
@@ -50,10 +54,20 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
     val context = LocalContext.current
     val userProcedureViewModel: UserProcedureViewModel = viewModel()
     val getUserProcedure = userProcedureViewModel.allUserProcedure.observeAsState()
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            if (isGranted) {
+                fetchFcmToken() {
+                    Log.d("fcmToken", it)
+                }
+            }
+        }
+    )
     LaunchedEffect(key1 = Unit) {
         userProcedureViewModel.getAllUserProcedure()
-        fetchFcmToken  () {
-         Log.d("fcmToken", it)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
     SafeArea {
@@ -89,7 +103,7 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                             Subtitle(text = "Upcoming", color = BorderColor, fontSize = 20)
                             Divider(color = BorderColor)
                             LazyColumn {
-                                items(result.data.upcomingUserProcedures){
+                                items(result.data.upcomingUserProcedures) {
                                     Spacer(modifier = Modifier.height(10.dp))
                                     ButtonWithIcon(text = it.procedure.title, fontSize = 20) {
                                         navController.navigate("${Constant.PREP_PROCESS_OVERVIEW_SCREEN}/${it.userProcedureId}")
@@ -103,7 +117,7 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                             Subtitle(text = "Completed", color = BorderColor, fontSize = 20)
                             Divider(color = BorderColor)
                             LazyColumn {
-                                items(result.data.completedUserProcedures){
+                                items(result.data.completedUserProcedures) {
                                     Spacer(modifier = Modifier.height(10.dp))
                                     ButtonWithIcon(text = it.procedure.title, fontSize = 20) {
                                         navController.navigate("${Constant.PREP_PROCESS_OVERVIEW_SCREEN}/${it.userProcedureId}")
@@ -112,26 +126,39 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                                 }
                             }
                         }
-                        if ( result.data.upcomingUserProcedures.isNotEmpty() || result.data.completedUserProcedures.isNotEmpty()){
-                            Column (modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.CenterHorizontally) {
+                        if (result.data.upcomingUserProcedures.isNotEmpty() || result.data.completedUserProcedures.isNotEmpty()) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Bottom,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
                                 CustomButton(text = "FAQ’s and Tips", width = 300) {
-                                     navController.navigate(Constant.FAQ_SCREEN)
+                                    navController.navigate(Constant.FAQ_SCREEN)
                                 }
                                 Spacer(modifier = Modifier.height(10.dp))
                                 OutlinedButton(
                                     onClick = {
-                                              if(result.data.upcomingUserProcedures.isNotEmpty()){
-                                                  Toast.makeText(context,Constant.PROCEDURE_EXISTS,Toast.LENGTH_LONG).show()
-                                              }else{
+                                        if (result.data.upcomingUserProcedures.isNotEmpty()) {
+                                            Toast.makeText(
+                                                context,
+                                                Constant.PROCEDURE_EXISTS,
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        } else {
 
-                                              }
+                                        }
                                     },
                                     border = BorderStroke(2.dp, MediumTurquoise),
                                     modifier = Modifier
                                         .width(300.dp)
                                         .height(50.dp)
                                 ) {
-                                    Text(text = "Prep For Another Procedure", color = MediumTurquoise, fontSize = 16.sp, fontWeight = FontWeight.W600)
+                                    Text(
+                                        text = "Prep For Another Procedure",
+                                        color = MediumTurquoise,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.W600
+                                    )
                                 }
                                 Spacer(modifier = Modifier.height(20.dp))
                             }
