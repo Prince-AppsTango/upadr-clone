@@ -73,8 +73,11 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     //For images
     implementation("io.coil-kt:coil-compose:2.2.2")
+    //firebase
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-messaging")
+    //for login with google
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
