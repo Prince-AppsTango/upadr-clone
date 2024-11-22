@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.app.upadrapp.shared.ButtonWithIcon
 import com.app.upadrapp.shared.CustomButton
+import com.app.upadrapp.shared.FetchFcmToken
 import com.app.upadrapp.shared.Loader
 import com.app.upadrapp.shared.NoDataFound
 import com.app.upadrapp.shared.Subtitle
@@ -51,6 +52,9 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
     val getUserProcedure = userProcedureViewModel.allUserProcedure.observeAsState()
     LaunchedEffect(key1 = Unit) {
         userProcedureViewModel.getAllUserProcedure()
+        FetchFcmToken () {
+         Log.d("fcmToken", it)
+        }
     }
     SafeArea {
         Column(
@@ -123,7 +127,9 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
                                               }
                                     },
                                     border = BorderStroke(2.dp, MediumTurquoise),
-                                    modifier = Modifier.width(300.dp).height(50.dp)
+                                    modifier = Modifier
+                                        .width(300.dp)
+                                        .height(50.dp)
                                 ) {
                                     Text(text = "Prep For Another Procedure", color = MediumTurquoise, fontSize = 16.sp, fontWeight = FontWeight.W600)
                                 }

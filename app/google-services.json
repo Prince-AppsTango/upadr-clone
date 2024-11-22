@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797400984314",
+    "project_id": "upadr-clone-5df74",
+    "storage_bucket": "upadr-clone-5df74.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797400984314:android:6e012a71d89039856eb743",
+        "android_client_info": {
+          "package_name": "com.app.upadrapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeSuBKnbnTvcJb6wUkRprU3yBiwkMqcho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
