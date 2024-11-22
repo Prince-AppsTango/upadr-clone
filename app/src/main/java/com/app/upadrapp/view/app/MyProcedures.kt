@@ -1,6 +1,6 @@
 package com.app.upadrapp.view.app
 
-import d android.util.Log
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
