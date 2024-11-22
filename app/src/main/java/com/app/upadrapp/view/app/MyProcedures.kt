@@ -1,6 +1,6 @@
 package com.app.upadrapp.view.app
 
-import android.util.Log
+import d android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -31,12 +31,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.app.upadrapp.shared.ButtonWithIcon
 import com.app.upadrapp.shared.CustomButton
-import com.app.upadrapp.shared.FetchFcmToken
 import com.app.upadrapp.shared.Loader
 import com.app.upadrapp.shared.NoDataFound
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
+import com.app.upadrapp.shared.fetchFcmToken
 import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.MediumTurquoise
@@ -52,7 +52,7 @@ fun MyProcedures(drawerState: DrawerState, navController: NavController) {
     val getUserProcedure = userProcedureViewModel.allUserProcedure.observeAsState()
     LaunchedEffect(key1 = Unit) {
         userProcedureViewModel.getAllUserProcedure()
-        FetchFcmToken () {
+        fetchFcmToken  () {
          Log.d("fcmToken", it)
         }
     }

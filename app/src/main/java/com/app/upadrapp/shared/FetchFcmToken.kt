@@ -2,7 +2,7 @@ package com.app.upadrapp.shared
 
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
-fun FetchFcmToken(onTokenReceived: (String) -> Unit) {
+fun fetchFcmToken(onTokenReceived: (String) -> Unit) {
     FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
         if (!task.isSuccessful) {
             Log.w("FCM", "Fetching FCM registration token failed", task.exception)
