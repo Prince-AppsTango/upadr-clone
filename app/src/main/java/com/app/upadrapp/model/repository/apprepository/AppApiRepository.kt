@@ -6,6 +6,7 @@ import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateParame
 import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateProcedureResponseModel
 import com.app.upadrapp.model.appmodel.medatamodel.MeDataReponseModel
 import com.app.upadrapp.model.appmodel.proceduremodel.ProcedureModel
+import com.app.upadrapp.model.appmodel.procedurestepsmodel.ProcedureStepsModel
 import com.app.upadrapp.model.appmodel.userproceduremodel.UserProcedureModel
 import retrofit2.Response
 
@@ -24,5 +25,8 @@ class AppApiRepository{
 
    suspend fun getUserProcedure():Response<UserProcedureModel>{
       return  appServices.getUserProcedure()
+   }
+   suspend fun getUserProcedureSteps(userProcedureId:String):Response<ProcedureStepsModel>{
+      return  appServices.getUserProcedureSteps(userProcedureId)
    }
 }
