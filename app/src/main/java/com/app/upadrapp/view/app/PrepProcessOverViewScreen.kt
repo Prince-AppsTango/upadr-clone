@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.app.upadrapp.shared.AlertDialogBox
 
 import com.app.upadrapp.shared.ConvertToDateCount
 import com.app.upadrapp.shared.CustomButton
@@ -62,12 +63,19 @@ import com.app.upadrapp.viewmodel.appviewmodel.ProcedureStepsViewModel
 import java.util.concurrent.TimeUnit
 
 @Composable
-fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerState,userProcedureId:String) {
-    val scrollState =  rememberScrollState()
+fun PrepProcessOverviewScreen(
+    navController: NavController,
+    drawerState: DrawerState,
+    userProcedureId: String
+) {
+    val scrollState = rememberScrollState()
+    val isCancelBoxOpen = remember {
+        mutableStateOf(false)
+    }
     val mDisplayMenu = remember {
         mutableStateOf(false)
     }
-    val procedureStepsViewModel:ProcedureStepsViewModel = viewModel()
+    val procedureStepsViewModel: ProcedureStepsViewModel = viewModel()
     val getProcedureStep = procedureStepsViewModel.getProcedureSteps.observeAsState()
     LaunchedEffect(key1 = userProcedureId) {
         procedureStepsViewModel.getUserProcedureSteps(userProcedureId)
@@ -97,18 +105,26 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                         }
                         IconButton(
                             onClick = {
-                                      mDisplayMenu.value=true
+                                mDisplayMenu.value = true
                             },
                             modifier = Modifier
                                 .size(60.dp)
                         ) {
-                            Icon(Icons.Filled.MoreVert, contentDescription = "MoreVert", tint = Color.Gray)
+                            Icon(
+                                Icons.Filled.MoreVert,
+                                contentDescription = "MoreVert",
+                                tint = Color.Gray
+                            )
                         }
-                       Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomEnd){
-                           DropDownMenuForPrep(mDisplayMenu = mDisplayMenu.value) {
-                               mDisplayMenu.value=false
-                           }
-                       }
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.BottomEnd
+                        ) {
+                            DropDownMenuForPrep(mDisplayMenu = mDisplayMenu.value, onCancel = {
+                                isCancelBoxOpen.value = true
+                                mDisplayMenu.value = false
+                            }, onEdit = {}, onDismissRequest = { mDisplayMenu.value = false })
+                        }
                     }
                     Subtitle(
                         text = "But don’t worry! We will send you notification when these things need to get done so you don’t have to remember it all. ",
@@ -116,23 +132,25 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                when(val result = getProcedureStep.value){
+                when (val result = getProcedureStep.value) {
                     is NetworkResponse.Error -> {
                         NoDataFound()
                     }
+
                     NetworkResponse.Loading -> {
-                            Loader()
+                        Loader()
                     }
+
                     is NetworkResponse.Success -> {
-                        result.data.userProcedures.procedure.steps.forEachIndexed{index, prepStep ->
-                            if(index % 2==0){
+                        result.data.userProcedures.procedure.steps.forEachIndexed { index, prepStep ->
+                            if (index % 2 == 0) {
                                 Row(modifier = Modifier.fillMaxWidth()) {
                                     Column(
                                         modifier = Modifier
                                             .fillMaxWidth(0.5f)
                                             .padding(20.dp, 0.dp, 0.dp, 0.dp)
                                     ) {
-                                        Title(text = "Step ${index+1}", color = Black)
+                                        Title(text = "Step ${index + 1}", color = Black)
                                         Title(
                                             text = "${ConvertToDateCount(prepStep.`when`)} ${
                                                 if (prepStep.isBeforeProcedure) "before" else "after"
@@ -145,9 +163,13 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                             maxLines = 6
                                         )
                                         Spacer(modifier = Modifier.height(5.dp))
-                                        Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
-                                            navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
-                                        })
+                                        Text(
+                                            text = "See More Details",
+                                            color = MediumTurquoise,
+                                            fontWeight = FontWeight.SemiBold,
+                                            modifier = Modifier.clickable {
+                                                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
+                                            })
                                     }
                                     Box(
                                         modifier = Modifier
@@ -161,17 +183,17 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                                 Color.Gray,
                                                 MaterialTheme.shapes.extraLarge
                                             )
-                                    ){
+                                    ) {
                                         AsyncImage(
                                             model = prepStep.procedureStepImageUrl,
-                                            contentDescription = "${index+1}",
+                                            contentDescription = "${index + 1}",
                                             modifier = Modifier.fillMaxSize(),
                                             contentScale = ContentScale.Crop
                                         )
                                     }
                                 }
                                 Spacer(modifier = Modifier.height(30.dp))
-                            }else{
+                            } else {
                                 Row(modifier = Modifier.fillMaxWidth()) {
                                     Box(
                                         modifier = Modifier
@@ -185,10 +207,10 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                                 Color.Gray,
                                                 MaterialTheme.shapes.extraLarge
                                             )
-                                    ){
+                                    ) {
                                         AsyncImage(
                                             model = prepStep.procedureStepImageUrl,
-                                            contentDescription = "${index+1}",
+                                            contentDescription = "${index + 1}",
                                             modifier = Modifier.fillMaxSize(),
                                             contentScale = ContentScale.Crop
                                         )
@@ -196,11 +218,12 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                     Column(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(0.dp, 0.dp, 20.dp, 0.dp), horizontalAlignment = Alignment.End
+                                            .padding(0.dp, 0.dp, 20.dp, 0.dp),
+                                        horizontalAlignment = Alignment.End
                                     ) {
-                                        Title(text = "Step ${index+1}", color = Black)
+                                        Title(text = "Step ${index + 1}", color = Black)
                                         Text(
-                                            text =  "${ConvertToDateCount(prepStep.`when`)} ${
+                                            text = "${ConvertToDateCount(prepStep.`when`)} ${
                                                 if (prepStep.isBeforeProcedure) "before" else "after"
                                             } procedure",
                                             color = Black,
@@ -215,22 +238,38 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                                             maxLines = 6
                                         )
                                         Spacer(modifier = Modifier.height(5.dp))
-                                        Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
-                                            navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
-                                        })
+                                        Text(
+                                            text = "See More Details",
+                                            color = MediumTurquoise,
+                                            fontWeight = FontWeight.SemiBold,
+                                            modifier = Modifier.clickable {
+                                                navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
+                                            })
                                     }
                                 }
                                 Spacer(modifier = Modifier.height(30.dp))
                             }
                             Spacer(modifier = Modifier.height(30.dp))
                         }
-                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            CustomButton(text = "FAQ’s and Tips", width =300 ) {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CustomButton(text = "FAQ’s and Tips", width = 300) {
                                 navController.navigate(Constant.TIPS_SCREEN)
                             }
                         }
                         Spacer(modifier = Modifier.height(40.dp))
+                        if (isCancelBoxOpen.value) {
+                            AlertDialogBox(
+                                onDismissRequest = { isCancelBoxOpen.value = false },
+                                onConfirmation = { },
+                                dialogTitle = "Cancel Procedure",
+                                dialogText = "Are you sure you want to cancel your procedure? This process is irreversible and you will have to re-enter your information later."
+                            )
+                        }
                     }
+
                     null -> {
                         NoDataFound()
                     }

@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.sp
 import com.app.upadrapp.ui.theme.Black
 
 @Composable
-fun DropDownMenuForPrep(mDisplayMenu: Boolean, onDismissRequest: () -> Unit) {
+fun DropDownMenuForPrep(mDisplayMenu: Boolean, onDismissRequest: () -> Unit,onEdit:()->Unit, onCancel:()->Unit) {
     DropdownMenu(
         expanded = mDisplayMenu,
         onDismissRequest = { onDismissRequest() },
         modifier = Modifier.background(Color.White)
     ) {
-         DropdownMenuItem(text = { Text(text = "Edit Procedure", color = Black, fontSize = 16.sp, fontWeight = FontWeight.W600, textAlign = TextAlign.Center)}, onClick = { /*TODO*/ })
-         DropdownMenuItem(text = { Text(text = "Cancel Procedure", color = Black, fontSize = 16.sp, fontWeight = FontWeight.W600,textAlign = TextAlign.Center) }, onClick = { /*TODO*/ })
+         DropdownMenuItem(text = { Text(text = "Edit Procedure", color = Black, fontSize = 16.sp, fontWeight = FontWeight.W600, textAlign = TextAlign.Center)}, onClick = { onEdit() })
+         DropdownMenuItem(text = { Text(text = "Cancel Procedure", color = Black, fontSize = 16.sp, fontWeight = FontWeight.W600,textAlign = TextAlign.Center) }, onClick = { onCancel() })
      }
 }
