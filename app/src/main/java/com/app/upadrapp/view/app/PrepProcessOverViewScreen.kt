@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,21 +38,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.app.upadrapp.shared.ConvertToDateCount
 import com.app.upadrapp.shared.CustomButton
+import com.app.upadrapp.shared.Loader
+import com.app.upadrapp.shared.NoDataFound
 import com.app.upadrapp.shared.Subtitle
 import com.app.upadrapp.shared.Title
 import com.app.upadrapp.shared.TopDrawerNavigation
 import com.app.upadrapp.ui.theme.Black
 import com.app.upadrapp.ui.theme.MediumTurquoise
 import com.app.upadrapp.utils.Constant
+import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.utils.prepSteps
 import com.app.upadrapp.viewmodel.appviewmodel.ProcedureStepsViewModel
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerState,userProcedureId:String) {
     val scrollState =  rememberScrollState()
     val procedureStepsViewModel:ProcedureStepsViewModel = viewModel()
+    val getProcedureStep = procedureStepsViewModel.getProcedureSteps.observeAsState()
     LaunchedEffect(key1 = userProcedureId) {
         procedureStepsViewModel.getUserProcedureSteps(userProcedureId)
     }
@@ -92,77 +99,97 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                prepSteps.forEachIndexed{index, prepStep ->
-                    if(index % 2==0){
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.5f)
-                                    .padding(20.dp, 0.dp, 0.dp, 0.dp)
-                            ) {
-                                Title(text = "Step 1", color = Black)
-                                Title(text = "3 days before procedure", color = Black)
-                                Subtitle(
-                                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
-                                    color = Black,
-                                    maxLines = 6
-                                )
-                                Spacer(modifier = Modifier.height(5.dp))
-                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
-                                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
-                                })
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .height(200.dp)
-                                    .width(200.dp)
-                                    .offset(y = 30.dp, x = 20.dp)
-                                    .clip(RoundedCornerShape(100.dp))
-                                    .background(Color.Gray)
-                                    .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(30.dp))
-                    }else{
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            Box(
-                                modifier = Modifier
-                                    .height(200.dp)
-                                    .width(200.dp)
-                                    .offset(y = 30.dp, x = (-20).dp)
-                                    .clip(RoundedCornerShape(100.dp))
-                                    .background(Color.Gray)
-                                    .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
-                            )
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(0.dp, 0.dp, 20.dp, 0.dp), horizontalAlignment = Alignment.End
-                            ) {
-                                Title(text = "Step 1", color = Black)
-                                Text(
-                                    text = "3 days before procedure",
-                                    color = Black,
-                                    textAlign = TextAlign.Right,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                                Text(
-                                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
-                                    color = Black,
-                                    fontWeight = FontWeight.Normal,
-                                    textAlign = TextAlign.Right,
-                                    maxLines = 6
-                                )
-                                Spacer(modifier = Modifier.height(5.dp))
-                                Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
-                                    navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
-                                })
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(30.dp))
+                when(val result = getProcedureStep.value){
+                    is NetworkResponse.Error -> {
+                        NoDataFound()
                     }
-                    Spacer(modifier = Modifier.height(30.dp))
+                    NetworkResponse.Loading -> {
+                        Loader()
                     }
+                    is NetworkResponse.Success -> {
+                        result.data.userProcedures.procedure.steps.forEachIndexed{index, prepStep ->
+                            if(index % 2==0){
+                                Row(modifier = Modifier.fillMaxWidth()) {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth(0.5f)
+                                            .padding(20.dp, 0.dp, 0.dp, 0.dp)
+                                    ) {
+                                        Title(text = "Step ${index+1}", color = Black)
+                                        Title(
+                                            text = "${ConvertToDateCount(prepStep.`when`)} ${
+                                                if (prepStep.isBeforeProcedure) "before" else "after"
+                                            } procedure",
+                                            color = Black
+                                        )
+                                        Subtitle(
+                                            text = prepStep.description,
+                                            color = Black,
+                                            maxLines = 6
+                                        )
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
+                                            navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
+                                        })
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .height(200.dp)
+                                            .width(200.dp)
+                                            .offset(y = 30.dp, x = 20.dp)
+                                            .clip(RoundedCornerShape(100.dp))
+                                            .background(Color.Gray)
+                                            .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
+                                    )
+                                }
+                                Spacer(modifier = Modifier.height(30.dp))
+                            }else{
+                                Row(modifier = Modifier.fillMaxWidth()) {
+                                    Box(
+                                        modifier = Modifier
+                                            .height(200.dp)
+                                            .width(200.dp)
+                                            .offset(y = 30.dp, x = (-20).dp)
+                                            .clip(RoundedCornerShape(100.dp))
+                                            .background(Color.Gray)
+                                            .border(2.dp, Color.Gray, MaterialTheme.shapes.extraLarge)
+                                    )
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(0.dp, 0.dp, 20.dp, 0.dp), horizontalAlignment = Alignment.End
+                                    ) {
+                                        Title(text = "Step ${index+1}", color = Black)
+                                        Text(
+                                            text =  "${ConvertToDateCount(prepStep.`when`)} ${
+                                                if (prepStep.isBeforeProcedure) "before" else "after"
+                                            } procedure",
+                                            color = Black,
+                                            textAlign = TextAlign.Right,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                        Text(
+                                            text = prepStep.description,
+                                            color = Black,
+                                            fontWeight = FontWeight.Normal,
+                                            textAlign = TextAlign.Right,
+                                            maxLines = 6
+                                        )
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(text = "See More Details", color = MediumTurquoise, fontWeight = FontWeight.SemiBold, modifier = Modifier.clickable {
+                                            navController.navigate(Constant.PREP_PROCESS_OVERVIEW_DETAILS_SCREEN)
+                                        })
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(30.dp))
+                            }
+                            Spacer(modifier = Modifier.height(30.dp))
+                        }
+                    }
+                    null -> {
+                        NoDataFound()
+                    }
+                }
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     CustomButton(text = "FAQ’s and Tips", width =300 ) {
                         navController.navigate(Constant.TIPS_SCREEN)
@@ -174,4 +201,3 @@ fun PrepProcessOverviewScreen(navController: NavController, drawerState: DrawerS
 
     }
 }
-
