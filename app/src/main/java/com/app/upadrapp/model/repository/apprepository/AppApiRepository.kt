@@ -1,18 +1,33 @@
 package com.app.upadrapp.model.repository.apprepository
 
+import android.util.Log
 import com.app.upadrapp.MainActivity
 import com.app.upadrapp.model.api.RetrofitInstance
+import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateParameterProcedureModel
+import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateProcedureResponseModel
 import com.app.upadrapp.model.appmodel.medatamodel.MeDataReponseModel
 import com.app.upadrapp.model.appmodel.proceduremodel.ProcedureModel
+import com.app.upadrapp.model.appmodel.procedurestepsmodel.ProcedureStepsModel
+import com.app.upadrapp.model.appmodel.userproceduremodel.UserProcedureModel
 import retrofit2.Response
 
 class AppApiRepository{
    val context = MainActivity.getAppContext()
-   private  val getRetroFitInstance = RetrofitInstance.getMeData(context)
+   private val appServices = RetrofitInstance.getAppServices(context)
    suspend fun getMeData():Response<MeDataReponseModel> {
-      return  getRetroFitInstance.getMeData()
+      return  appServices.getMeData()
    }
    suspend fun getAllProcedure():Response<ProcedureModel>{
-      return  getRetroFitInstance.getAllProcedure()
+      return  appServices.getAllProcedure()
+   }
+   suspend fun createUserProcedure(createParameterProcedureModel: CreateParameterProcedureModel):Response<CreateProcedureResponseModel>{
+      return  appServices.createUserProcedure(createParameterProcedureModel)
+   }
+
+   suspend fun getUserProcedure():Response<UserProcedureModel>{
+      return  appServices.getUserProcedure()
+   }
+   suspend fun getUserProcedureSteps(userProcedureId:String):Response<ProcedureStepsModel>{
+      return  appServices.getUserProcedureSteps(userProcedureId)
    }
 }

@@ -1,6 +1,8 @@
 package com.app.upadrapp.view.app.steps
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,16 +30,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.app.upadrapp.R
+import com.app.upadrapp.model.appmodel.createProcedureResponseModel.CreateParameterProcedureModel
 import com.app.upadrapp.shared.DatePickerModal
 import com.app.upadrapp.shared.DialTimePicker
 import com.app.upadrapp.shared.Subtitle
@@ -45,13 +53,22 @@ import com.app.upadrapp.shared.Title
 import com.app.upadrapp.ui.theme.BorderColor
 import com.app.upadrapp.ui.theme.DarkBlue
 import com.app.upadrapp.ui.theme.MediumTurquoise
+import com.app.upadrapp.utils.Constant
+import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.utils.combineDateTimeToISO
 import com.app.upadrapp.utils.formatDateFromTimestamp
 import com.app.upadrapp.utils.formatTimeFromTimePickerState
+import com.app.upadrapp.utils.parseMessage
+import com.app.upadrapp.viewmodel.appviewmodel.CreateProcedureApiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureId: String) {
+fun Step2(
+    onBackButtonClick: () -> Unit,
+    selectedProcedureId: String,
+    createProcedureApiViewModel: CreateProcedureApiViewModel,
+    context:Context
+) {
 
     val isDatePickerOpen = remember {
         mutableStateOf(false)
@@ -62,10 +79,12 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
     val selectedDate = remember {
         mutableStateOf("")
     }
-    Log.d("selectedDate", "$selectedDate") // 11/22/2024
     val selectedTime = remember {
         mutableStateOf("")
     }
+    val apiCallTriggered = remember { mutableStateOf(false) }
+
+
 
 
     Column {
@@ -150,12 +169,26 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
             }
             ExtendedFloatingActionButton(
                 onClick = {
-                    if (selectedDate.value.isNotEmpty() && selectedTime.value.isNotEmpty()){
-                        val combinedDateTime = combineDateTimeToISO(selectedDate.value,selectedTime.value)
-                        Log.d("combinedDateTime","$combinedDateTime")
-                        onClick()
+                    if (selectedDate.value.isNotEmpty() && selectedTime.value.isNotEmpty()) {
+                        val combinedDateTime =
+                            combineDateTimeToISO(selectedDate.value, selectedTime.value)
+                        val data = combinedDateTime?.let {
+                            CreateParameterProcedureModel(
+                                dateTime = it,
+                                procedureId = selectedProcedureId
+                            )
+                        }
+                        if (data != null) {
+                            createProcedureApiViewModel.createUserProcedure(data)
+                            apiCallTriggered.value = true
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Please select both date and time",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-
                 },
                 modifier = Modifier
                     .width(160.dp)
@@ -195,5 +228,6 @@ fun Step2(onClick: () -> Unit, onBackButtonClick: () -> Unit, selectedProcedureI
                 isTimePickerOpen.value = false
             })
         }
+
     }
 }

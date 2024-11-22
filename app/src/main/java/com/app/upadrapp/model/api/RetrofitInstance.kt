@@ -27,14 +27,10 @@ object RetrofitInstance {
             .client(client)
             .build()
     }
-    fun getSignIn(context: Context): AuthServices {
+    fun getAuthServices(context:Context): AuthServices {
         return getInstance(context).create(AuthServices::class.java)
     }
-    fun getMeData(context: Context):AppServices{
-        return  getInstance(context).create(AppServices :: class.java)
-    }
-
-    fun getAllProcedure(context: Context):AppServices{
-        return  getInstance(context).create(AppServices::class.java)
+    fun getAppServices(context: Context): AppServices {
+        return getInstance(context).create(AppServices::class.java)
     }
 }

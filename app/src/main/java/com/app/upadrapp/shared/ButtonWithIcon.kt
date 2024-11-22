@@ -25,8 +25,9 @@ import com.app.upadrapp.ui.theme.Black
 @Composable
 fun ButtonWithIcon(text:String,fontSize:Int=15,onClick:()->Unit) {
   Card(modifier = Modifier
-      .fillMaxWidth().clickable { onClick() }
+      .fillMaxWidth()
       .background(Color.White)
+      .clickable { onClick() }
       .height(50.dp), elevation = CardDefaults.cardElevation(5.dp)) {
       Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier
           .fillMaxWidth()

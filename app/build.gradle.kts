@@ -70,6 +70,8 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
     //Data store
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
+    //For images
+    implementation("io.coil-kt:coil-compose:2.2.2")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
