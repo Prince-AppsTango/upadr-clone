@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.app.upadrapp.store.getAccessToken
+import com.app.upadrapp.utils.GoogleSignInClient
 import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.view.auth.SplashScreen
 import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
@@ -34,7 +35,7 @@ fun AppNavigation() {
         SplashScreen()
     } else {
         if(accessToken.value != ""){
-           DrawerNavigation(navController = navController)
+           DrawerNavigation(navController = navController, context = context)
         }else{
             AuthNavigation(navController,{  isAuthenticated.value= false})
         }

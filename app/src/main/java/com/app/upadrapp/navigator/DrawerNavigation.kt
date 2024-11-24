@@ -1,5 +1,6 @@
 package com.app.upadrapp.navigator
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,13 +21,13 @@ import com.app.upadrapp.ui.theme.LightSlateBlue
 import com.app.upadrapp.ui.theme.MediumTurquoise
 
 @Composable
-fun DrawerNavigation(navController: NavHostController) {
+fun DrawerNavigation(navController: NavHostController,context: Context) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                DrawerContent(drawerState, navController)
+                DrawerContent(drawerState, navController,context)
             }
         },
     ) {

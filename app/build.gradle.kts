@@ -78,6 +78,10 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging")
     //for login with google
     implementation ("com.google.android.gms:play-services-auth:21.2.0")
+    implementation ("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation ("com.google.android.libraries.identity.googleid:googleid")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
