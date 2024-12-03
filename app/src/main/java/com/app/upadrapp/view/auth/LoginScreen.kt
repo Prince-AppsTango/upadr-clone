@@ -24,6 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,12 +50,14 @@ import com.app.upadrapp.ui.theme.LightCyan
 import com.app.upadrapp.ui.theme.MediumTurquoise
 import com.app.upadrapp.ui.theme.SubTitleColor
 import com.app.upadrapp.utils.Constant
+import com.app.upadrapp.utils.GoogleSignInClient
 import com.app.upadrapp.utils.NetworkResponse
 import com.app.upadrapp.utils.SafeArea
 import com.app.upadrapp.utils.parseMessage
 import com.app.upadrapp.viewmodel.authviewmodel.LoginUserViewModel
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(navController: NavController,onClick:() -> Unit) {
@@ -72,7 +76,9 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
     val data = loginData.value
     val scrollState = rememberScrollState()
     val context = LocalContext.current
+    val googleAuthClient = GoogleSignInClient(context = context)
 
+    val scope = rememberCoroutineScope()
     SafeArea {
         Column(
             modifier = Modifier
@@ -149,7 +155,12 @@ fun LoginScreen(navController: NavController,onClick:() -> Unit) {
                     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
                         Image(painter = painterResource(id = R.drawable.googlelogo), contentDescription = "googleLogo" , modifier = Modifier
                             .size(70.dp)
-                            .clickable { })
+                            .clickable {
+                               scope.launch {
+                                   googleAuthClient.signIn()
+                               }
+                            }
+                        )
                     }
                     Spacer(modifier = Modifier.height(25.dp))
                     Row(modifier = Modifier.fillMaxSize(1f), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Center) {

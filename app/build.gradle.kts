@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -72,6 +73,15 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     //For images
     implementation("io.coil-kt:coil-compose:2.2.2")
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-messaging")
+    //for login with google
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
+    implementation ("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation ("com.google.android.libraries.identity.googleid:googleid")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

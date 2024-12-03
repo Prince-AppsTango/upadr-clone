@@ -1,5 +1,6 @@
 package com.app.upadrapp.shared
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,11 +35,13 @@ import kotlinx.coroutines.launch
 import  com.app.upadrapp.R
 import com.app.upadrapp.store.saveToDataStore
 import com.app.upadrapp.utils.Constant
+import com.app.upadrapp.utils.GoogleSignInClient
 
 @Composable
-fun DrawerContent(drawerState: DrawerState,navController: NavController) {
+fun DrawerContent(drawerState: DrawerState,navController: NavController,context: Context) {
     val scope = rememberCoroutineScope()
     val context = MainActivity.getAppContext()
+    val googleAuthClient = GoogleSignInClient(context = context)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,6 +94,7 @@ fun DrawerContent(drawerState: DrawerState,navController: NavController) {
             TextButton(onClick = {
               scope.launch {
                   saveToDataStore(context = context, accessToken = "", refreshToken = "")
+                  googleAuthClient.signOut()
               }
             }) {
                 Text(
